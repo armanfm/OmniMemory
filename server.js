@@ -1,0 +1,1889 @@
+import { createServer } from "node:http";
+import {
+  existsSync,
+  readFileSync,
+  appendFileSync,
+  writeFileSync,
+  mkdirSync,
+  renameSync,
+  rmSync
+} from "node:fs";
+import { dirname, extname, join } from "node:path";
+
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
+import { z } from "zod";
+
+// ============================================================
+// TERRA DOURADA v4 — CHAT + ARQUIVOS + RECALL
+// ============================================================
+
+const PORT = Number(process.env.PORT ?? 8787);
+const HOST = "127.0.0.1";
+const MCP_PATH = "/mcp";
+
+const MEMORY_PATH =
+  process.env.TD_MEMORY_PATH ?? "./data/messages.jsonl";
+
+const FILE_META_PATH =
+  process.env.TD_FILE_META_PATH ?? "./data/files.jsonl";
+
+const FILE_DIR =
+  process.env.TD_FILE_DIR ?? "./data/files";
+
+const CAPTURE_KEY =
+  process.env.TD_CAPTURE_KEY ??
+  "0195f5c990a1ef54ee9f3976684f44a49e2eadf32f2f1be3";
+
+const CONFIG = {
+  chunkSize: 800,
+  chunkMinChars: 20,
+  topK: 8,
+  neighborsBefore: 1,
+  neighborsAfter: 2,
+  maxExpandedChars: 24000,
+  maxTextFileBytes: 25 * 1024 * 1024
+};
+
+const STOPWORDS = new Set([
+  "a","o","as","os","um","uma","uns","umas",
+  "de","da","do","das","dos","e","ou","mas",
+  "em","no","na","nos","nas","que","se","por",
+  "para","com","sem","eu","voce","você","ele",
+  "ela","eles","elas","me","te","meu","minha",
+  "seu","sua","isso","isto","aquilo","esse",
+  "essa","este","esta","como","qual","quais",
+  "quando","onde","foi","era","ser","estar",
+  "tem","tinha","ter","mais","muito","ai","aí",
+  "ne","né"
+]);
+
+const TEXT_EXTENSIONS = new Set([
+  ".txt",".md",".markdown",".json",".jsonl",".csv",
+  ".ts",".tsx",".js",".jsx",".mjs",".cjs",
+  ".rs",".go",".py",".java",".kt",".kts",
+  ".c",".h",".cpp",".hpp",".cs",".sol",
+  ".html",".htm",".css",".scss",".sass",".less",
+  ".yaml",".yml",".xml",".sql",".toml",".ini",
+  ".env",".log",".sh",".ps1",".bat",".cmd",
+  ".vue",".svelte",".graphql",".gql",".properties"
+]);
+
+const messages = new Map();
+const files = new Map();
+const uploads = new Map();
+
+let chunks = [];
+let invertedIndex = new Map();
+let groupChunkIds = new Map();
+
+// ============================================================
+// UTIL
+// ============================================================
+
+function normalize(text) {
+  return String(text ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9_\-.$#]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function tokenize(text) {
+  const n = normalize(text);
+  if (!n) return [];
+
+  const seen = new Set();
+  const out = [];
+
+  for (const token of n.split(" ")) {
+    if (token.length < 2) continue;
+    if (STOPWORDS.has(token)) continue;
+    if (seen.has(token)) continue;
+    seen.add(token);
+    out.push(token);
+  }
+
+  return out;
+}
+
+function splitLongText(text, maxChars) {
+  const parts = [];
+  let rest = String(text ?? "").trim();
+
+  while (rest.length > maxChars) {
+    let cut = rest.lastIndexOf(" ", maxChars);
+
+    if (cut < Math.floor(maxChars * 0.5)) {
+      cut = maxChars;
+    }
+
+    const part = rest.slice(0, cut).trim();
+    if (part) parts.push(part);
+
+    rest = rest.slice(cut).trim();
+  }
+
+  if (rest) parts.push(rest);
+  return parts;
+}
+
+function createTextChunks(text) {
+  const cleanText = String(text ?? "")
+    .replace(/\r/g, "")
+    .trim();
+
+  if (!cleanText) return [];
+
+  const rawBlocks = cleanText.split(/\n\s*\n/);
+  const mergedBlocks = [];
+  let pendingHeadings = [];
+
+  const isHeading = block =>
+    /^#{1,6}\s+\S.*$/.test(block.trim()) &&
+    !block.trim().includes("\n");
+
+  for (const raw of rawBlocks) {
+    const block = raw.trim();
+    if (!block) continue;
+
+    if (isHeading(block)) {
+      pendingHeadings.push(block);
+      continue;
+    }
+
+    if (pendingHeadings.length > 0) {
+      mergedBlocks.push(
+        pendingHeadings.join("\n") +
+        "\n\n" +
+        block
+      );
+      pendingHeadings = [];
+    } else {
+      mergedBlocks.push(block);
+    }
+  }
+
+  if (pendingHeadings.length > 0) {
+    if (mergedBlocks.length > 0) {
+      mergedBlocks[mergedBlocks.length - 1] +=
+        "\n\n" +
+        pendingHeadings.join("\n");
+    } else {
+      mergedBlocks.push(
+        pendingHeadings.join("\n")
+      );
+    }
+  }
+
+  const out = [];
+
+  for (const block of mergedBlocks) {
+    for (const part of splitLongText(
+      block,
+      CONFIG.chunkSize
+    )) {
+      if (part.length >= CONFIG.chunkMinChars) {
+        out.push(part);
+      }
+    }
+  }
+
+  if (!out.length && cleanText) {
+    out.push(cleanText);
+  }
+
+  return out;
+}
+
+function bigrams(text) {
+  const s = normalize(text);
+  const set = new Set();
+
+  if (s.length < 2) {
+    if (s) set.add(s);
+    return set;
+  }
+
+  for (let i = 0; i < s.length - 1; i++) {
+    set.add(s.slice(i, i + 2));
+  }
+
+  return set;
+}
+
+function jaccard(a, b) {
+  const A = bigrams(a);
+  const B = bigrams(b);
+
+  if (!A.size || !B.size) {
+    return 0;
+  }
+
+  let intersection = 0;
+
+  for (const x of A) {
+    if (B.has(x)) {
+      intersection++;
+    }
+  }
+
+  const union =
+    A.size + B.size - intersection;
+
+  return union
+    ? intersection / union
+    : 0;
+}
+
+function tokenSimilarity(a, b) {
+  if (a === b) {
+    return 1;
+  }
+
+  if (a.length >= 4 && b.length >= 4) {
+    if (
+      a.startsWith(b) ||
+      b.startsWith(a)
+    ) {
+      return 0.72;
+    }
+
+    const sim = jaccard(a, b);
+
+    if (sim >= 0.55) {
+      return sim * 0.72;
+    }
+  }
+
+  return 0;
+}
+
+function scoreChunk(queryTokens, chunk) {
+  if (!queryTokens.length) {
+    return 0;
+  }
+
+  let total = 0;
+  let exact = 0;
+  let fuzzy = 0;
+
+  for (const q of queryTokens) {
+    let best = 0;
+
+    for (const t of chunk.tokens) {
+      const sim =
+        tokenSimilarity(q, t);
+
+      if (sim > best) {
+        best = sim;
+      }
+
+      if (best === 1) {
+        break;
+      }
+    }
+
+    if (best === 1) {
+      exact++;
+    } else if (best > 0) {
+      fuzzy++;
+    }
+
+    total += best;
+  }
+
+  const coverage =
+    total / queryTokens.length;
+
+  const precision =
+    total /
+    Math.max(
+      queryTokens.length,
+      chunk.tokens.length || 1
+    );
+
+  const exactBonus =
+    Math.min(exact * 0.10, 0.40);
+
+  const fuzzyBonus =
+    Math.min(fuzzy * 0.025, 0.10);
+
+  const normalizedChunk =
+    normalize(chunk.text);
+
+  const normalizedQuery =
+    queryTokens.join(" ");
+
+  const phraseBonus =
+    normalizedQuery.length > 4 &&
+    normalizedChunk.includes(normalizedQuery)
+      ? 0.35
+      : 0;
+
+  return Math.min(
+    1,
+    coverage * 0.72 +
+      precision * 0.28 +
+      exactBonus +
+      fuzzyBonus +
+      phraseBonus
+  );
+}
+
+function safePart(value) {
+  return String(value ?? "")
+    .replace(/[^a-zA-Z0-9._-]/g, "_")
+    .slice(0, 180);
+}
+
+function messageKey(m) {
+  return `${m.conversation_id}::${m.message_id}`;
+}
+
+function fileKey(f) {
+  return `${f.conversation_id}::${f.file_id}`;
+}
+
+function groupForMessage(m) {
+  return `chat:${m.conversation_id}`;
+}
+
+function groupForFile(f) {
+  return `file:${f.conversation_id}:${f.file_id}`;
+}
+
+function isTextFile(record) {
+  const ext =
+    extname(record.filename || "")
+      .toLowerCase();
+
+  const mime =
+    String(record.mime || "")
+      .toLowerCase();
+
+  return (
+    TEXT_EXTENSIONS.has(ext) ||
+    mime.startsWith("text/") ||
+    mime.includes("json") ||
+    mime.includes("xml") ||
+    mime.includes("javascript") ||
+    mime.includes("yaml")
+  );
+}
+
+// ============================================================
+// PERSISTÊNCIA
+// ============================================================
+
+function ensureStorage() {
+  mkdirSync(dirname(MEMORY_PATH), {
+    recursive: true
+  });
+
+  mkdirSync(dirname(FILE_META_PATH), {
+    recursive: true
+  });
+
+  mkdirSync(FILE_DIR, {
+    recursive: true
+  });
+
+  if (!existsSync(MEMORY_PATH)) {
+    appendFileSync(
+      MEMORY_PATH,
+      "",
+      "utf8"
+    );
+  }
+
+  if (!existsSync(FILE_META_PATH)) {
+    appendFileSync(
+      FILE_META_PATH,
+      "",
+      "utf8"
+    );
+  }
+}
+
+function loadJsonl(path, onRecord) {
+  if (!existsSync(path)) {
+    return;
+  }
+
+  const raw =
+    readFileSync(path, "utf8");
+
+  for (const line of raw.split("\n")) {
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      continue;
+    }
+
+    try {
+      onRecord(JSON.parse(trimmed));
+    } catch {
+      console.warn(
+        `JSONL inválido ignorado em ${path}`
+      );
+    }
+  }
+}
+
+function loadMemory() {
+  ensureStorage();
+
+  messages.clear();
+  files.clear();
+
+  loadJsonl(MEMORY_PATH, record => {
+    if (
+      record.conversation_id &&
+      record.message_id
+    ) {
+      messages.set(
+        messageKey(record),
+        record
+      );
+    }
+  });
+
+  loadJsonl(FILE_META_PATH, record => {
+    if (
+      record.conversation_id &&
+      record.file_id &&
+      record.saved_path
+    ) {
+      files.set(
+        fileKey(record),
+        record
+      );
+    }
+  });
+
+  rebuildIndex();
+}
+
+function persistMessage(message) {
+  appendFileSync(
+    MEMORY_PATH,
+    JSON.stringify(message) + "\n",
+    "utf8"
+  );
+}
+
+function persistFileMeta(record) {
+  appendFileSync(
+    FILE_META_PATH,
+    JSON.stringify(record) + "\n",
+    "utf8"
+  );
+}
+
+function upsertMessages(incoming) {
+  let changed = 0;
+
+  for (const raw of incoming) {
+    const m = {
+      conversation_id:
+        String(raw.conversation_id ?? "").trim(),
+
+      message_id:
+        String(raw.message_id ?? "").trim(),
+
+      role:
+        raw.role === "assistant"
+          ? "assistant"
+          : "user",
+
+      text:
+        String(raw.text ?? "").trim(),
+
+      url:
+        String(raw.url ?? ""),
+
+      captured_at:
+        new Date().toISOString()
+    };
+
+    if (
+      !m.conversation_id ||
+      !m.message_id ||
+      !m.text
+    ) {
+      continue;
+    }
+
+    const key =
+      messageKey(m);
+
+    const previous =
+      messages.get(key);
+
+    if (
+      previous &&
+      previous.role === m.role &&
+      previous.text === m.text
+    ) {
+      continue;
+    }
+
+    messages.set(key, m);
+    persistMessage(m);
+    changed++;
+  }
+
+  if (changed > 0) {
+    rebuildIndex();
+  }
+
+  return changed;
+}
+
+// ============================================================
+// ARQUIVOS
+// ============================================================
+
+function startFileUpload(meta) {
+  const conversationId =
+    String(meta.conversation_id ?? "").trim();
+
+  const fileId =
+    String(meta.file_id ?? "").trim();
+
+  const filename =
+    String(meta.filename ?? "arquivo").trim();
+
+  if (!conversationId || !fileId) {
+    throw new Error(
+      "conversation_id e file_id são obrigatórios"
+    );
+  }
+
+  const uploadId =
+    `${safePart(conversationId)}__${safePart(fileId)}`;
+
+  const convDir =
+    join(
+      FILE_DIR,
+      safePart(conversationId)
+    );
+
+  mkdirSync(convDir, {
+    recursive: true
+  });
+
+  const finalPath =
+    join(
+      convDir,
+      `${safePart(fileId)}__${safePart(filename)}`
+    );
+
+  const tempPath =
+    finalPath + ".uploading";
+
+  writeFileSync(tempPath, Buffer.alloc(0));
+
+  uploads.set(uploadId, {
+    upload_id: uploadId,
+    conversation_id: conversationId,
+    file_id: fileId,
+    filename,
+    mime: String(meta.mime ?? ""),
+    size: Number(meta.size ?? 0),
+    last_modified:
+      Number(meta.last_modified ?? 0),
+    url: String(meta.url ?? ""),
+    temp_path: tempPath,
+    final_path: finalPath,
+    received_bytes: 0,
+    started_at:
+      new Date().toISOString()
+  });
+
+  return uploadId;
+}
+
+function appendFileChunk(
+  uploadId,
+  base64
+) {
+  const upload =
+    uploads.get(uploadId);
+
+  if (!upload) {
+    throw new Error(
+      "upload_id desconhecido"
+    );
+  }
+
+  const bytes =
+    Buffer.from(base64, "base64");
+
+  appendFileSync(
+    upload.temp_path,
+    bytes
+  );
+
+  upload.received_bytes +=
+    bytes.length;
+
+  return upload.received_bytes;
+}
+
+function finishFileUpload(uploadId) {
+  const upload =
+    uploads.get(uploadId);
+
+  if (!upload) {
+    throw new Error(
+      "upload_id desconhecido"
+    );
+  }
+
+  renameSync(
+    upload.temp_path,
+    upload.final_path
+  );
+
+  uploads.delete(uploadId);
+
+  const record = {
+    conversation_id:
+      upload.conversation_id,
+
+    file_id:
+      upload.file_id,
+
+    filename:
+      upload.filename,
+
+    mime:
+      upload.mime,
+
+    size:
+      upload.size,
+
+    last_modified:
+      upload.last_modified,
+
+    saved_path:
+      upload.final_path,
+
+    url:
+      upload.url,
+
+    captured_at:
+      new Date().toISOString()
+  };
+
+  files.set(
+    fileKey(record),
+    record
+  );
+
+  persistFileMeta(record);
+  rebuildIndex();
+
+  return record;
+}
+
+// ============================================================
+// ÍNDICE
+// ============================================================
+
+function pushIndexedChunk(chunk) {
+  chunk.id = chunks.length;
+  chunk.tokens = tokenize(chunk.text);
+
+  chunks.push(chunk);
+
+  const groupList =
+    groupChunkIds.get(chunk.group_id) ?? [];
+
+  chunk.group_pos =
+    groupList.length;
+
+  groupList.push(chunk.id);
+
+  groupChunkIds.set(
+    chunk.group_id,
+    groupList
+  );
+
+  for (const token of chunk.tokens) {
+    if (!invertedIndex.has(token)) {
+      invertedIndex.set(
+        token,
+        new Set()
+      );
+    }
+
+    invertedIndex
+      .get(token)
+      .add(chunk.id);
+  }
+}
+
+function rebuildIndex() {
+  chunks = [];
+  invertedIndex = new Map();
+  groupChunkIds = new Map();
+
+  const orderedMessages =
+    [...messages.values()]
+      .sort((a, b) => {
+        if (
+          a.conversation_id !==
+          b.conversation_id
+        ) {
+          return a.conversation_id
+            .localeCompare(
+              b.conversation_id
+            );
+        }
+
+        return a.message_id
+          .localeCompare(
+            b.message_id
+          );
+      });
+
+  for (const message of orderedMessages) {
+    const parts =
+      createTextChunks(
+        message.text
+      );
+
+    for (
+      let part = 0;
+      part < parts.length;
+      part++
+    ) {
+      pushIndexedChunk({
+        source_type: "chat",
+        group_id:
+          groupForMessage(message),
+
+        conversation_id:
+          message.conversation_id,
+
+        source_id:
+          message.message_id,
+
+        role:
+          message.role,
+
+        filename:
+          null,
+
+        part,
+        captured_at:
+          message.captured_at,
+
+        text:
+          parts[part]
+      });
+    }
+  }
+
+  for (const file of files.values()) {
+    const metadataText =
+      `${file.filename} ${file.mime}`;
+
+    if (
+      !isTextFile(file) ||
+      !existsSync(file.saved_path) ||
+      file.size > CONFIG.maxTextFileBytes
+    ) {
+      // Binário: preservado no disco e pesquisável pelo nome/metadados.
+      pushIndexedChunk({
+        source_type: "file",
+        group_id:
+          groupForFile(file),
+
+        conversation_id:
+          file.conversation_id,
+
+        source_id:
+          file.file_id,
+
+        role: null,
+        filename:
+          file.filename,
+
+        part: 0,
+        captured_at:
+          file.captured_at,
+
+        text:
+          metadataText
+      });
+
+      continue;
+    }
+
+    let text = "";
+
+    try {
+      text =
+        readFileSync(
+          file.saved_path,
+          "utf8"
+        );
+    } catch {
+      text = "";
+    }
+
+    const parts =
+      createTextChunks(text);
+
+    if (!parts.length) {
+      parts.push(metadataText);
+    }
+
+    for (
+      let part = 0;
+      part < parts.length;
+      part++
+    ) {
+      pushIndexedChunk({
+        source_type: "file",
+        group_id:
+          groupForFile(file),
+
+        conversation_id:
+          file.conversation_id,
+
+        source_id:
+          file.file_id,
+
+        role: null,
+        filename:
+          file.filename,
+
+        part,
+        captured_at:
+          file.captured_at,
+
+        text:
+          parts[part]
+      });
+    }
+  }
+
+  console.log(
+    `🔁 Índice: ${messages.size} mensagens | ` +
+    `${files.size} arquivos | ` +
+    `${chunks.length} chunks | ` +
+    `${invertedIndex.size} tokens`
+  );
+}
+
+function candidateIds(
+  queryTokens,
+  conversationId
+) {
+  const ids = new Set();
+
+  for (const token of queryTokens) {
+    const direct =
+      invertedIndex.get(token);
+
+    if (!direct) {
+      continue;
+    }
+
+    for (const id of direct) {
+      const chunk =
+        chunks[id];
+
+      if (
+        !conversationId ||
+        chunk.conversation_id ===
+          conversationId
+      ) {
+        ids.add(id);
+      }
+    }
+  }
+
+  if (ids.size === 0) {
+    for (const queryToken of queryTokens) {
+      for (
+        const [indexedToken, chunkIds]
+        of invertedIndex
+      ) {
+        if (
+          tokenSimilarity(
+            queryToken,
+            indexedToken
+          ) < 0.55
+        ) {
+          continue;
+        }
+
+        for (const id of chunkIds) {
+          const chunk =
+            chunks[id];
+
+          if (
+            !conversationId ||
+            chunk.conversation_id ===
+              conversationId
+          ) {
+            ids.add(id);
+          }
+        }
+      }
+    }
+  }
+
+  return ids;
+}
+
+function getRangeForHit(chunk) {
+  const list =
+    groupChunkIds.get(
+      chunk.group_id
+    ) ?? [];
+
+  return {
+    group_id:
+      chunk.group_id,
+
+    source_type:
+      chunk.source_type,
+
+    conversation_id:
+      chunk.conversation_id,
+
+    filename:
+      chunk.filename,
+
+    start:
+      Math.max(
+        0,
+        chunk.group_pos -
+          CONFIG.neighborsBefore
+      ),
+
+    end:
+      Math.min(
+        list.length - 1,
+        chunk.group_pos +
+          CONFIG.neighborsAfter
+      ),
+
+    hits: [{
+      chunk_id:
+        chunk.id,
+
+      group_pos:
+        chunk.group_pos,
+
+      score:
+        chunk.score
+    }]
+  };
+}
+
+function mergeRanges(hitChunks) {
+  const byGroup =
+    new Map();
+
+  for (const chunk of hitChunks) {
+    const range =
+      getRangeForHit(chunk);
+
+    const list =
+      byGroup.get(
+        range.group_id
+      ) ?? [];
+
+    list.push(range);
+
+    byGroup.set(
+      range.group_id,
+      list
+    );
+  }
+
+  const mergedAll = [];
+
+  for (
+    const [, ranges]
+    of byGroup
+  ) {
+    ranges.sort(
+      (a, b) =>
+        a.start - b.start
+    );
+
+    const merged = [];
+
+    for (const range of ranges) {
+      const last =
+        merged[
+          merged.length - 1
+        ];
+
+      if (
+        last &&
+        range.start <=
+          last.end + 1
+      ) {
+        last.end =
+          Math.max(
+            last.end,
+            range.end
+          );
+
+        last.hits.push(
+          ...range.hits
+        );
+      } else {
+        merged.push({
+          ...range,
+          hits: [
+            ...range.hits
+          ]
+        });
+      }
+    }
+
+    mergedAll.push(
+      ...merged
+    );
+  }
+
+  return mergedAll;
+}
+
+function rangeToMemory(range) {
+  const list =
+    groupChunkIds.get(
+      range.group_id
+    ) ?? [];
+
+  const selected = [];
+
+  for (
+    let pos = range.start;
+    pos <= range.end;
+    pos++
+  ) {
+    const chunk =
+      chunks[list[pos]];
+
+    if (chunk) {
+      selected.push(chunk);
+    }
+  }
+
+  if (
+    range.source_type === "file"
+  ) {
+    const text =
+      selected
+        .map(x => x.text)
+        .join("\n\n");
+
+    return {
+      source_type: "file",
+      conversation_id:
+        range.conversation_id,
+
+      filename:
+        range.filename,
+
+      text:
+        `ARQUIVO: ${range.filename}\n\n${text}`
+    };
+  }
+
+  const grouped = [];
+
+  for (const chunk of selected) {
+    const last =
+      grouped[
+        grouped.length - 1
+      ];
+
+    if (
+      last &&
+      last.source_id ===
+        chunk.source_id
+    ) {
+      last.text +=
+        "\n\n" +
+        chunk.text;
+    } else {
+      grouped.push({
+        source_id:
+          chunk.source_id,
+
+        role:
+          chunk.role,
+
+        text:
+          chunk.text
+      });
+    }
+  }
+
+  const text =
+    grouped
+      .map(item =>
+        `${item.role === "user" ? "USER" : "ASSISTANT"}:\n${item.text}`
+      )
+      .join(
+        "\n\n---\n\n"
+      );
+
+  return {
+    source_type: "chat",
+    conversation_id:
+      range.conversation_id,
+
+    filename: null,
+    text
+  };
+}
+
+function searchMemory(
+  query,
+  topK,
+  conversationId
+) {
+  const started =
+    performance.now();
+
+  const queryTokens =
+    tokenize(query);
+
+  const ids =
+    candidateIds(
+      queryTokens,
+      conversationId || ""
+    );
+
+  const scored = [];
+
+  for (const id of ids) {
+    const chunk =
+      chunks[id];
+
+    if (!chunk) {
+      continue;
+    }
+
+    const score =
+      scoreChunk(
+        queryTokens,
+        chunk
+      );
+
+    if (score <= 0) {
+      continue;
+    }
+
+    scored.push({
+      ...chunk,
+      score
+    });
+  }
+
+  scored.sort((a, b) => {
+    if (b.score !== a.score) {
+      return b.score - a.score;
+    }
+
+    return a.id - b.id;
+  });
+
+  const hits =
+    scored.slice(
+      0,
+      topK
+    );
+
+  const ranges =
+    mergeRanges(hits);
+
+  const memories = [];
+  let expandedChars = 0;
+
+  for (const range of ranges) {
+    const memory =
+      rangeToMemory(range);
+
+    if (!memory.text) {
+      continue;
+    }
+
+    const separatorCost =
+      memories.length
+        ? 5
+        : 0;
+
+    if (
+      CONFIG.maxExpandedChars > 0 &&
+      expandedChars +
+        separatorCost +
+        memory.text.length >
+        CONFIG.maxExpandedChars
+    ) {
+      break;
+    }
+
+    const bestScore =
+      Math.max(
+        ...range.hits
+          .map(h => h.score)
+      );
+
+    memories.push({
+      source_type:
+        memory.source_type,
+
+      conversation_id:
+        memory.conversation_id,
+
+      filename:
+        memory.filename,
+
+      range: {
+        start:
+          range.start,
+
+        end:
+          range.end
+      },
+
+      hits:
+        range.hits
+          .map(h =>
+            h.chunk_id
+          ),
+
+      best_score:
+        Number(
+          bestScore.toFixed(6)
+        ),
+
+      text:
+        memory.text
+    });
+
+    expandedChars +=
+      separatorCost +
+      memory.text.length;
+  }
+
+  return {
+    query,
+    query_tokens:
+      queryTokens,
+
+    total_messages:
+      messages.size,
+
+    total_files:
+      files.size,
+
+    total_chunks:
+      chunks.length,
+
+    candidates:
+      ids.size,
+
+    latency_ms:
+      Number(
+        (
+          performance.now() -
+          started
+        ).toFixed(3)
+      ),
+
+    memories
+  };
+}
+
+// ============================================================
+// MCP
+// ============================================================
+
+function createTerraDouradaMcp() {
+  const server =
+    new McpServer(
+      {
+        name:
+          "terra-dourada-memory",
+
+        version:
+          "0.4.0"
+      },
+      {
+        instructions:
+          "Use search_memory when earlier conversation or attached-file context may help. " +
+          "The returned memory is supplemental context; reason normally and freely."
+      }
+    );
+
+  server.registerTool(
+    "search_memory",
+    {
+      title:
+        "Search Terra Dourada memory",
+
+      description:
+        "Searches automatically captured ChatGPT conversation history and captured files using deterministic local recall.",
+
+      inputSchema: {
+        query:
+          z.string().min(1),
+
+        top_k:
+          z.number()
+            .int()
+            .min(1)
+            .max(20)
+            .optional(),
+
+        conversation_id:
+          z.string()
+            .optional()
+      },
+
+      annotations: {
+        readOnlyHint: true,
+        openWorldHint: false,
+        destructiveHint: false
+      }
+    },
+
+    async ({
+      query,
+      top_k,
+      conversation_id
+    }) => {
+      const result =
+        searchMemory(
+          query,
+          top_k ??
+            CONFIG.topK,
+          conversation_id ?? ""
+        );
+
+      return {
+        structuredContent:
+          result,
+
+        content: [{
+          type: "text",
+
+          text:
+            result.memories.length > 0
+              ? result.memories
+                  .map(m => m.text)
+                  .join(
+                    "\n\n=====\n\n"
+                  )
+              : "Nenhuma memória relevante encontrada."
+        }]
+      };
+    }
+  );
+
+  return server;
+}
+
+// ============================================================
+// HTTP
+// ============================================================
+
+function readJsonBody(req) {
+  return new Promise(
+    (resolve, reject) => {
+      let body = "";
+
+      req.on("data", chunk => {
+        body += chunk;
+
+        if (
+          body.length >
+          12_000_000
+        ) {
+          reject(
+            new Error(
+              "Body muito grande"
+            )
+          );
+
+          req.destroy();
+        }
+      });
+
+      req.on("end", () => {
+        try {
+          resolve(
+            body
+              ? JSON.parse(body)
+              : {}
+          );
+        } catch (e) {
+          reject(e);
+        }
+      });
+
+      req.on(
+        "error",
+        reject
+      );
+    }
+  );
+}
+
+function json(
+  res,
+  status,
+  body
+) {
+  res.writeHead(
+    status,
+    {
+      "content-type":
+        "application/json; charset=utf-8"
+    }
+  );
+
+  res.end(
+    JSON.stringify(body)
+  );
+}
+
+function authorized(req) {
+  return (
+    req.headers[
+      "x-terra-key"
+    ] === CAPTURE_KEY
+  );
+}
+
+loadMemory();
+
+const httpServer =
+  createServer(
+    async (req, res) => {
+      if (!req.url) {
+        res
+          .writeHead(400)
+          .end("Missing URL");
+
+        return;
+      }
+
+      const url =
+        new URL(
+          req.url,
+          `http://${req.headers.host ?? "localhost"}`
+        );
+
+      if (
+        req.method === "GET" &&
+        (
+          url.pathname === "/" ||
+          url.pathname === "/status"
+        )
+      ) {
+        json(
+          res,
+          200,
+          {
+            name:
+              "Terra Dourada",
+
+            status:
+              "ok",
+
+            messages:
+              messages.size,
+
+            files:
+              files.size,
+
+            chunks:
+              chunks.length,
+
+            tokens:
+              invertedIndex.size,
+
+            mcp:
+              MCP_PATH,
+
+            capture_chat:
+              "/capture/batch",
+
+            capture_files:
+              "/capture/file/*"
+          }
+        );
+
+        return;
+      }
+
+      if (
+        req.method === "POST" &&
+        url.pathname ===
+          "/capture/batch"
+      ) {
+        if (!authorized(req)) {
+          json(
+            res,
+            401,
+            {
+              ok: false,
+              error:
+                "unauthorized"
+            }
+          );
+
+          return;
+        }
+
+        try {
+          const body =
+            await readJsonBody(req);
+
+          const list =
+            Array.isArray(
+              body.messages
+            )
+              ? body.messages
+              : [];
+
+          const changed =
+            upsertMessages(list);
+
+          json(
+            res,
+            200,
+            {
+              ok: true,
+              received:
+                list.length,
+              changed,
+              total_messages:
+                messages.size,
+              total_files:
+                files.size,
+              total_chunks:
+                chunks.length
+            }
+          );
+        } catch (error) {
+          json(
+            res,
+            400,
+            {
+              ok: false,
+              error:
+                String(error)
+            }
+          );
+        }
+
+        return;
+      }
+
+      if (
+        req.method === "POST" &&
+        url.pathname ===
+          "/capture/file/start"
+      ) {
+        if (!authorized(req)) {
+          json(
+            res,
+            401,
+            {
+              ok: false,
+              error:
+                "unauthorized"
+            }
+          );
+
+          return;
+        }
+
+        try {
+          const body =
+            await readJsonBody(req);
+
+          const uploadId =
+            startFileUpload(body);
+
+          json(
+            res,
+            200,
+            {
+              ok: true,
+              upload_id:
+                uploadId
+            }
+          );
+        } catch (error) {
+          json(
+            res,
+            400,
+            {
+              ok: false,
+              error:
+                String(error)
+            }
+          );
+        }
+
+        return;
+      }
+
+      if (
+        req.method === "POST" &&
+        url.pathname ===
+          "/capture/file/chunk"
+      ) {
+        if (!authorized(req)) {
+          json(
+            res,
+            401,
+            {
+              ok: false,
+              error:
+                "unauthorized"
+            }
+          );
+
+          return;
+        }
+
+        try {
+          const body =
+            await readJsonBody(req);
+
+          const received =
+            appendFileChunk(
+              String(
+                body.upload_id ?? ""
+              ),
+              String(
+                body.base64 ?? ""
+              )
+            );
+
+          json(
+            res,
+            200,
+            {
+              ok: true,
+              received_bytes:
+                received
+            }
+          );
+        } catch (error) {
+          json(
+            res,
+            400,
+            {
+              ok: false,
+              error:
+                String(error)
+            }
+          );
+        }
+
+        return;
+      }
+
+      if (
+        req.method === "POST" &&
+        url.pathname ===
+          "/capture/file/end"
+      ) {
+        if (!authorized(req)) {
+          json(
+            res,
+            401,
+            {
+              ok: false,
+              error:
+                "unauthorized"
+            }
+          );
+
+          return;
+        }
+
+        try {
+          const body =
+            await readJsonBody(req);
+
+          const record =
+            finishFileUpload(
+              String(
+                body.upload_id ?? ""
+              )
+            );
+
+          json(
+            res,
+            200,
+            {
+              ok: true,
+              file:
+                record,
+              total_files:
+                files.size,
+              total_chunks:
+                chunks.length
+            }
+          );
+        } catch (error) {
+          json(
+            res,
+            400,
+            {
+              ok: false,
+              error:
+                String(error)
+            }
+          );
+        }
+
+        return;
+      }
+
+      if (
+        req.method === "OPTIONS" &&
+        url.pathname ===
+          MCP_PATH
+      ) {
+        res.writeHead(
+          204,
+          {
+            "Access-Control-Allow-Origin":
+              "*",
+
+            "Access-Control-Allow-Methods":
+              "POST, GET, DELETE, OPTIONS",
+
+            "Access-Control-Allow-Headers":
+              "content-type, mcp-session-id",
+
+            "Access-Control-Expose-Headers":
+              "Mcp-Session-Id"
+          }
+        );
+
+        res.end();
+        return;
+      }
+
+      if (
+        url.pathname === MCP_PATH &&
+        [
+          "POST",
+          "GET",
+          "DELETE"
+        ].includes(
+          req.method ?? ""
+        )
+      ) {
+        res.setHeader(
+          "Access-Control-Allow-Origin",
+          "*"
+        );
+
+        res.setHeader(
+          "Access-Control-Expose-Headers",
+          "Mcp-Session-Id"
+        );
+
+        const server =
+          createTerraDouradaMcp();
+
+        const transport =
+          new StreamableHTTPServerTransport({
+            sessionIdGenerator:
+              undefined,
+
+            enableJsonResponse:
+              true
+          });
+
+        res.on("close", () => {
+          transport.close();
+          server.close();
+        });
+
+        try {
+          await server.connect(
+            transport
+          );
+
+          await transport
+            .handleRequest(
+              req,
+              res
+            );
+        } catch (error) {
+          console.error(
+            "Erro MCP:",
+            error
+          );
+
+          if (!res.headersSent) {
+            res
+              .writeHead(500)
+              .end(
+                "Internal server error"
+              );
+          }
+        }
+
+        return;
+      }
+
+      res
+        .writeHead(404)
+        .end("Not Found");
+    }
+  );
+
+httpServer.listen(
+  PORT,
+  HOST,
+  () => {
+    console.log(
+      `🌍 Terra Dourada local: http://${HOST}:${PORT}`
+    );
+
+    console.log(
+      `🔎 MCP: http://${HOST}:${PORT}${MCP_PATH}`
+    );
+
+    console.log(
+      `📥 Chat: http://${HOST}:${PORT}/capture/batch`
+    );
+
+    console.log(
+      `📎 Arquivos: http://${HOST}:${PORT}/capture/file/*`
+    );
+
+    console.log(
+      `📊 Status: http://${HOST}:${PORT}/status`
+    );
+  }
+);

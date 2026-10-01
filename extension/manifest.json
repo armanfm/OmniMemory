@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Terra Dourada Chat Capture",
+  "version": "0.2.0",
+  "description": "Captura automaticamente mensagens visíveis do ChatGPT e envia para a memória local Terra Dourada.",
+  "permissions": [],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*",
+    "http://127.0.0.1:8787/*",
+    "http://localhost:8787/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "Terra Dourada"
+  }
+}
