@@ -428,39 +428,54 @@ http://127.0.0.1:8787/status
 
 ## Roadmap
 
-The current OmniMemory baseline is intentionally simple. Future work should improve how memory is organized and maintained without turning the core recall engine into a second LLM.
+The current OmniMemory baseline is intentionally simple: local, deterministic, explainable and independent of embeddings.
 
-### Long documents and long-form text
+Future work should improve scale, organization and maintenance without changing that core philosophy.
 
-Improve ingestion of large documents, manuals and long conversations so that useful structure is preserved during indexing.
+### Priority 1 — Ingestion deduplication and compaction
 
-Goals include:
+Browser capture can observe the same message more than once, especially while responses are still being streamed or when the DOM is updated repeatedly.
 
-- handling long files without losing section boundaries;
-- keeping headings and nearby context attached to retrieved fragments;
-- supporting larger documents without forcing the whole file into model context;
-- allowing the agent to retrieve only the relevant portions of a long source;
-- avoiding unnecessary duplication when the same source is captured more than once.
+The ingestion layer should therefore treat deduplication as a base requirement, not only as a later optimization.
 
-Conceptually:
+Planned direction:
 
 ```text
-long document
-     ↓
-structured segmentation
-     ↓
-local index
-     ↓
-relevant section only
-     ↓
-agent
+incoming message
+      ↓
+stable identity / deterministic hash
+      ↓
+already stored?
+├── yes → ignore or update existing record
+└── no  → persist and index
 ```
 
-### Stronger separation by screen / conversation
+A possible deterministic identity may include:
 
-Treat each ChatGPT conversation or screen as a first-class memory scope.
+```text
+conversation_id
+message_id
+role
+text/version
+```
 
-The current implementation already stores `conversation_id`. The roadmap is to make this separation more explicit in both capture and retrieval.
+In addition to preventing duplicate active records, the persistence layer should support compaction so that obsolete intermediate versions do not grow indefinitely.
+
+Goals:
+
+- avoid repeated messages in the active corpus;
+- avoid duplicate neighbor expansion;
+- keep the persistent store compact;
+- preserve the latest valid version of captured content;
+- rebuild only affected index entries after updates.
+
+---
+
+### Priority 2 — Stronger separation by screen / conversation
+
+Each ChatGPT screen or conversation should be treated as a first-class memory scope.
+
+The current implementation already stores `conversation_id`. The roadmap is to make that isolation stronger during both capture and retrieval.
 
 ```text
 Chat / Screen A
@@ -476,7 +491,7 @@ Project / Collection
 └── selected files
 ```
 
-The intended retrieval order is:
+Recommended retrieval order:
 
 ```text
 current screen / conversation
@@ -486,65 +501,171 @@ selected project / collection
 global memory only if necessary
 ```
 
-This reduces unrelated memories competing with each other and keeps local context easier to reason about.
+This reduces unrelated memories competing in the same search and keeps recall more context-aware.
 
-### Selective capture
+---
 
-Allow the user to decide what should become persistent memory.
+### Priority 3 — Persistent storage and persistent text index
 
-Possible controls include:
+The current baseline persists raw data in `.jsonl` files and rebuilds in-memory indexes when the server starts.
 
-- capture this conversation;
-- ignore this conversation;
-- add this file;
-- add this manual;
-- add this project folder;
-- exclude temporary or low-value material.
+This is simple and transparent, but the startup cost and RAM usage can grow as the corpus becomes much larger.
 
-The goal is not to store everything by default forever.
+A natural future direction is an embedded database with persistent indexing, with **SQLite + FTS5** as the primary candidate.
 
-### Memory cleanup and deletion
+Potential benefits:
 
-Add explicit mechanisms to remove information that is no longer useful.
+- persistent structured storage;
+- persistent full-text index;
+- faster startup;
+- less need to rebuild every structure from scratch;
+- incremental inserts and updates;
+- real pagination;
+- easier deletion and compaction;
+- lower memory pressure as the corpus grows.
 
-Examples:
+This is a roadmap direction, not a current implementation claim.
 
-- delete a captured conversation;
-- remove a file from memory;
-- remove obsolete versions;
-- delete duplicated content;
-- discard low-value or irrelevant captures;
-- rebuild the index after cleanup.
+The exact performance benefit must be measured before replacing the current engine.
+
+---
+
+### Priority 4 — Fuzzy-search pruning before Jaccard
+
+Exact lookup through the inverted index is naturally selective.
+
+The more expensive path is the fuzzy fallback, especially when a query produces many possible lexical candidates.
+
+The roadmap is to add a cheap pruning stage before calculating character-bigram Jaccard similarity.
 
 Conceptually:
 
 ```text
-captured memory
-      ↓
-review / relevance decision
-      ↓
-keep ───────────→ indexed
-delete / ignore → removed from active memory
+query token
+    ↓
+cheap pre-filter
+    ↓
+small candidate vocabulary
+    ↓
+prefix / bigram Jaccard
+    ↓
+deterministic score
 ```
 
-Cleanup should reduce noise as the corpus grows while keeping deletion understandable and auditable.
+Possible pruning signals include:
 
-### Relevance-aware maintenance
+- token-length bounds;
+- prefix constraints;
+- shared character fragments;
+- first-character grouping;
+- cached token signatures;
+- minimum overlap estimates.
 
-Over time, OmniMemory should be able to help identify content that may no longer deserve space in the active memory corpus.
+The goal is to preserve the current deterministic fuzzy behavior while avoiding unnecessary comparisons.
 
-Possible signals include:
+---
+
+### Priority 5 — Long documents and long-form text
+
+Improve ingestion of large documents, manuals and long conversations so useful structure is preserved during indexing.
+
+Goals include:
+
+- handling long files without losing section boundaries;
+- keeping headings and nearby context attached to retrieved fragments;
+- retrieving only the relevant section of a large source;
+- avoiding unnecessary duplication;
+- keeping chunk relationships traceable to the original source.
+
+Conceptually:
+
+```text
+long document
+     ↓
+structured segmentation
+     ↓
+persistent/local index
+     ↓
+relevant section only
+     ↓
+agent
+```
+
+---
+
+### Priority 6 — Historical conversation synchronization
+
+The browser extension can only capture content that is actually present in the ChatGPT DOM.
+
+When older messages are not loaded by the interface, they are outside the extension's current visibility.
+
+The roadmap should therefore make synchronization coverage explicit.
+
+Possible improvements:
+
+- show whether a conversation appears fully synchronized;
+- provide a helper that guides the user through loading older content;
+- detect incomplete capture when possible;
+- allow manual import of exported conversation data;
+- avoid implying that an old conversation was fully captured when only part of it was visible.
+
+For historical conversations, the user may need to load or scroll through older content before the extension can capture it.
+
+---
+
+### Priority 7 — Explicit memory cleanup
+
+As the corpus grows, OmniMemory should provide direct controls for removing information that is no longer useful.
+
+Examples:
+
+```text
+delete conversation
+delete file
+remove obsolete version
+remove duplicate
+remove irrelevant capture
+compact storage
+reindex affected scope
+```
+
+Cleanup should be understandable and auditable.
+
+The system should not silently delete important memory merely because it was not recently retrieved.
+
+---
+
+### Priority 8 — Relevance-aware maintenance
+
+OmniMemory may help identify candidates for cleanup without automatically deleting them.
+
+Possible signals:
 
 - exact duplicates;
 - near-duplicates;
 - obsolete versions;
 - temporary conversations;
-- content never selected as useful;
-- user-marked irrelevant material.
+- content explicitly marked irrelevant;
+- repeated streaming snapshots;
+- sources superseded by a newer source.
 
-Automatic deletion should not be assumed. A safer model is to expose candidates for cleanup and let the user or application policy decide what is removed.
+Preferred flow:
 
-### Project and collection scopes
+```text
+memory corpus
+     ↓
+identify cleanup candidates
+     ↓
+user / application policy
+     ↓
+keep or remove
+```
+
+This preserves user control while reducing long-term noise.
+
+---
+
+### Priority 9 — Project and collection scopes
 
 Add first-class scopes beyond individual conversations.
 
@@ -559,9 +680,11 @@ collection: Personal Notes
 
 A collection can group several chats, files and manuals without forcing unrelated material into the same search space.
 
-### Source-aware recall
+---
 
-Keep enough source metadata so that retrieved context can be traced back to where it came from.
+### Priority 10 — Source-aware recall
+
+Keep enough source metadata so retrieved context can be traced to where it came from.
 
 Useful source information includes:
 
@@ -573,15 +696,47 @@ Useful source information includes:
 - collection or project;
 - original source identifier.
 
-This keeps recall explainable and makes it possible for the agent to fetch more context from the same source when necessary.
+This allows the agent to retrieve more context from the same source when necessary instead of treating each chunk as an isolated fragment.
+
+---
 
 ### Preserve graceful degradation
 
-Future features should preserve an important property of the current architecture:
+Future features should preserve one of the current architecture's most important properties:
 
 > **OmniMemory should help the agent, not become a single point of failure.**
 
-If a scope is empty, a source was deleted, or recall returns weak context, the agent should still be able to continue with the active conversation and other available tools.
+If a scope is empty, a source was deleted, the server is unavailable, or recall returns weak context, the agent should still be able to continue using the active conversation and other available sources.
+
+---
+
+### Roadmap principle
+
+Improvements should be introduced because they solve an observed scaling or retrieval problem, not simply because a more complex architecture exists.
+
+The preferred evolution is:
+
+```text
+simple baseline
+      ↓
+measure real limitation
+      ↓
+add the smallest useful improvement
+      ↓
+measure again
+```
+
+The goal is to preserve OmniMemory's identity:
+
+```text
+local-first
+deterministic
+selective
+auditable
+privacy-oriented
+```
+
+while making it more robust as the corpus grows.
 
 ---
 
@@ -607,3 +762,4 @@ The system is intentionally designed as a memory layer rather than a second mode
 **OmniMemory is a local-first deterministic memory layer for AI agents that retrieves relevant fragments from conversations and files without requiring the entire history to be loaded into the model context.**
 
 It separates persistent memory from reasoning, keeps retrieval explainable, and allows the agent to continue operating even when recall is incomplete or unavailable.
+
