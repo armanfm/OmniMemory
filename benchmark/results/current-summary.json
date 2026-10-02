@@ -1,0 +1,35 @@
+{
+  "implementation": "OmniMemory 1.3.0",
+  "storage": "JSONL",
+  "index": "in-memory tokens with query-time single-edit fallback",
+  "synthetic_20000": {
+    "disk_mib": 19.53235149383545,
+    "ingestion_s": 0.7632884639999999,
+    "update10_ms": 2.4908510000000206,
+    "unchanged10_ms": 0.19501400000012836,
+    "boot_ms": 475.39082800000006,
+    "boot_rss_mib": 211.80859375,
+    "workload_rss_mib": 300.65625
+  },
+  "locomo": {
+    "questions": 1540,
+    "questions_with_evidence": 1536,
+    "complete_evidence": 1027,
+    "complete_evidence_rate": 0.6686197916666666,
+    "mean_evidence_recall": 0.7264928403536784,
+    "p50_ms": 3.627223000000413,
+    "p95_ms": 5.457028999999693,
+    "median_context_chars": 10000,
+    "ingestion_ms": 301.29501699999895,
+    "message_count": 5882,
+    "disk_bytes": 4517640,
+    "rss_mib": 250.2109375,
+    "stats": {
+      "total_messages": 5882,
+      "total_files": 0,
+      "total_chunks": 5914,
+      "tokens": 5938
+    }
+  },
+  "zep_executed": false
+}

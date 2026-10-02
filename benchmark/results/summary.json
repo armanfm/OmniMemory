@@ -1,0 +1,100 @@
+{
+  "synthetic": [
+    {
+      "engine": "legacy",
+      "messages": 20000,
+      "disk_mib": 10.0920991897583,
+      "ingestion_s": 36.681980398,
+      "update10_ms": 384.79944400000386,
+      "boot_median_ms": 516.638729,
+      "boot_rss_mib": 245.05859375,
+      "workload_rss_mib": 457.45703125
+    },
+    {
+      "engine": "sqlite",
+      "messages": 20000,
+      "disk_mib": 210.90625,
+      "ingestion_s": 15.876749183,
+      "update10_ms": 5.4128229999987525,
+      "boot_median_ms": 0.9749079999999992,
+      "boot_rss_mib": 41.078125,
+      "workload_rss_mib": 431.38671875
+    },
+    {
+      "engine": "jsonl",
+      "messages": 20000,
+      "disk_mib": 19.53235149383545,
+      "ingestion_s": 1.848927373,
+      "update10_ms": 2.305432999999539,
+      "boot_median_ms": 1536.974505,
+      "boot_rss_mib": 392.11328125,
+      "workload_rss_mib": 537.859375
+    }
+  ],
+  "locomo": [
+    {
+      "engine": "legacy",
+      "questions": 1540,
+      "questions_with_evidence": 1536,
+      "complete_evidence": 707,
+      "complete_evidence_rate": 0.4602864583333333,
+      "mean_evidence_recall": 0.5144373802007011,
+      "p50_ms": 109.9832929999975,
+      "p95_ms": 208.34746200000518,
+      "median_context_chars": 10000,
+      "ingestion_ms": 2793.9060939999877,
+      "message_count": 5882,
+      "disk_bytes": 1811286,
+      "rss_mib": 369.65625,
+      "stats": {
+        "total_messages": 5882,
+        "total_chunks": 5914
+      }
+    },
+    {
+      "engine": "sqlite",
+      "questions": 1540,
+      "questions_with_evidence": 1536,
+      "complete_evidence": 1062,
+      "complete_evidence_rate": 0.69140625,
+      "mean_evidence_recall": 0.7501990850043163,
+      "p50_ms": 49.22854300000108,
+      "p95_ms": 82.30714399999124,
+      "median_context_chars": 10000,
+      "ingestion_ms": 1328.3033329999944,
+      "message_count": 5882,
+      "disk_bytes": 17420288,
+      "rss_mib": 285.0078125,
+      "stats": {
+        "total_messages": 5882,
+        "total_files": 0,
+        "total_chunks": 5914,
+        "tokens": 5938
+      }
+    },
+    {
+      "engine": "jsonl",
+      "questions": 1540,
+      "questions_with_evidence": 1536,
+      "complete_evidence": 1062,
+      "complete_evidence_rate": 0.69140625,
+      "mean_evidence_recall": 0.7501990850043163,
+      "p50_ms": 33.70350899999903,
+      "p95_ms": 63.59842000000208,
+      "median_context_chars": 10000,
+      "ingestion_ms": 334.0234729999993,
+      "message_count": 5882,
+      "disk_bytes": 4517640,
+      "rss_mib": 306.625,
+      "stats": {
+        "total_messages": 5882,
+        "total_files": 0,
+        "total_chunks": 5914,
+        "tokens": 5938
+      }
+    }
+  ],
+  "zep_executed": false,
+  "synthetic_sqlite_jsonl_contexts_identical": true,
+  "locomo_sqlite_jsonl_contexts_identical": true
+}

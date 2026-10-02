@@ -1,0 +1,1656 @@
+{
+  "started_at": "2026-10-02T01:14:01.483Z",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "logical_cpus": 9,
+  "runs": [
+    {
+      "mode": "performance",
+      "engine": "jsonl",
+      "n": 20000,
+      "boot_empty_ms": 1.015638999999993,
+      "ingestion_ms": 763.288464,
+      "batches": {
+        "n": 200,
+        "p50_ms": 3.0380059999999958,
+        "p95_ms": 6.744228000000021,
+        "min_ms": 2.6418890000001056,
+        "max_ms": 41.449239000000006
+      },
+      "update10_ms": 2.4908510000000206,
+      "unchanged10_ms": 0.19501400000012836,
+      "timings": [
+        {
+          "id": "exact_id",
+          "category": "selective",
+          "query": "registro-014200",
+          "n": 5,
+          "p50_ms": 0.10975499999995009,
+          "p95_ms": 0.15229999999996835,
+          "min_ms": 0.05831799999998566,
+          "max_ms": 0.15229999999996835,
+          "raw_ms": [
+            0.12917499999991833,
+            0.10570899999993344,
+            0.10975499999995009,
+            0.15229999999996835,
+            0.05831799999998566
+          ],
+          "returned_chars": [
+            1131,
+            1131,
+            1131,
+            1131,
+            1131
+          ],
+          "candidates": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "exact_hash",
+          "category": "selective",
+          "query": "0xc5ff76f1965c6ba1b418896c856bf141fc979863",
+          "n": 5,
+          "p50_ms": 0.04493800000000192,
+          "p95_ms": 0.07632499999999709,
+          "min_ms": 0.024647000000072694,
+          "max_ms": 0.07632499999999709,
+          "raw_ms": [
+            0.04493800000000192,
+            0.07632499999999709,
+            0.045368000000053144,
+            0.03521299999999883,
+            0.024647000000072694
+          ],
+          "returned_chars": [
+            1125,
+            1125,
+            1125,
+            1125,
+            1125
+          ],
+          "candidates": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "id": "project_topic",
+          "category": "selective",
+          "query": "projeto-00710 quantidade material",
+          "n": 5,
+          "p50_ms": 67.89589100000012,
+          "p95_ms": 70.66880700000002,
+          "min_ms": 66.90038200000004,
+          "max_ms": 70.66880700000002,
+          "raw_ms": [
+            70.66880700000002,
+            66.90038200000004,
+            67.74233000000004,
+            69.00266799999986,
+            67.89589100000012
+          ],
+          "returned_chars": [
+            3781,
+            3781,
+            3781,
+            3781,
+            3781
+          ],
+          "candidates": [
+            20000,
+            20000,
+            20000,
+            20000,
+            20000
+          ]
+        },
+        {
+          "id": "scoped_topic",
+          "category": "scoped",
+          "query": "origem destino transferencia",
+          "conversation_id": "projeto-00710",
+          "n": 5,
+          "p50_ms": 6.344706000000087,
+          "p95_ms": 9.318054999999958,
+          "min_ms": 6.287661000000071,
+          "max_ms": 9.318054999999958,
+          "raw_ms": [
+            9.318054999999958,
+            6.452698000000055,
+            6.344706000000087,
+            6.304304000000002,
+            6.287661000000071
+          ],
+          "returned_chars": [
+            3781,
+            3781,
+            3781,
+            3781,
+            3781
+          ],
+          "candidates": [
+            20,
+            20,
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "id": "fuzzy_identifier",
+          "category": "fuzzy",
+          "query": "registrp-014200",
+          "n": 5,
+          "p50_ms": 0.005277999999862004,
+          "p95_ms": 0.054923000000144384,
+          "min_ms": 0.004177000000026965,
+          "max_ms": 0.054923000000144384,
+          "raw_ms": [
+            0.054923000000144384,
+            0.007270999999946071,
+            0.005277999999862004,
+            0.004497000000128537,
+            0.004177000000026965
+          ],
+          "returned_chars": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidates": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "typo_word",
+          "category": "typo",
+          "query": "origem destino transferencai",
+          "conversation_id": "projeto-00710",
+          "n": 5,
+          "p50_ms": 8.40636100000006,
+          "p95_ms": 9.192774999999983,
+          "min_ms": 7.0869440000001305,
+          "max_ms": 9.192774999999983,
+          "raw_ms": [
+            8.408924999999954,
+            7.0869440000001305,
+            7.276378999999906,
+            8.40636100000006,
+            9.192774999999983
+          ],
+          "returned_chars": [
+            3781,
+            3781,
+            3781,
+            3781,
+            3781
+          ],
+          "candidates": [
+            20,
+            20,
+            20,
+            20,
+            20
+          ]
+        },
+        {
+          "id": "global_common",
+          "category": "broad",
+          "query": "rastreabilidade auditoria material",
+          "n": 5,
+          "p50_ms": 72.5595350000001,
+          "p95_ms": 102.72352699999988,
+          "min_ms": 70.7415860000001,
+          "max_ms": 102.72352699999988,
+          "raw_ms": [
+            70.7415860000001,
+            72.5595350000001,
+            71.38806000000022,
+            102.72352699999988,
+            80.30148600000007
+          ],
+          "returned_chars": [
+            3775,
+            3775,
+            3775,
+            3775,
+            3775
+          ],
+          "candidates": [
+            20000,
+            20000,
+            20000,
+            20000,
+            20000
+          ]
+        },
+        {
+          "id": "no_match",
+          "category": "absent",
+          "query": "zzqxvzzqxv",
+          "n": 5,
+          "p50_ms": 0.0998899999999594,
+          "p95_ms": 0.12889399999994566,
+          "min_ms": 0.06690100000014354,
+          "max_ms": 0.12889399999994566,
+          "raw_ms": [
+            0.0998899999999594,
+            0.08571899999992638,
+            0.11000600000011218,
+            0.12889399999994566,
+            0.06690100000014354
+          ],
+          "returned_chars": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidates": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "rss_mb": 300.65625,
+      "heap_mb": 60.31603240966797,
+      "max_rss_mb": 327.7265625,
+      "disk_bytes": 20481155,
+      "stats": {
+        "total_messages": 20000,
+        "total_files": 0,
+        "total_chunks": 20000,
+        "tokens": 61837
+      }
+    }
+  ],
+  "boots": [
+    {
+      "mode": "boot",
+      "engine": "jsonl",
+      "n": 20000,
+      "boot_ms": 475.39082800000006,
+      "rss_mb": 211.80859375,
+      "heap_mb": 57.18971252441406,
+      "max_rss_mb": 215.13671875
+    },
+    {
+      "mode": "boot",
+      "engine": "jsonl",
+      "n": 20000,
+      "boot_ms": 484.031197,
+      "rss_mb": 211.81640625,
+      "heap_mb": 57.189849853515625,
+      "max_rss_mb": 215.16796875
+    },
+    {
+      "mode": "boot",
+      "engine": "jsonl",
+      "n": 20000,
+      "boot_ms": 471.92159699999996,
+      "rss_mb": 211.78125,
+      "heap_mb": 57.18968200683594,
+      "max_rss_mb": 214.98828125
+    }
+  ],
+  "quality": [
+    {
+      "mode": "quality",
+      "engine": "jsonl",
+      "rss_mb": 53.4453125,
+      "heap_mb": 12.556144714355469,
+      "max_rss_mb": 53.4453125,
+      "description": "45 synthetic Portuguese retrieval questions across nine categories; no LLM answers or judge.",
+      "results": [
+        {
+          "id": "literal0",
+          "category": "literal",
+          "query": "Mineral0 limite operacional",
+          "expected": [
+            {
+              "conversation_id": "quality-literal0",
+              "source_id": "m-literal0"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 5,
+          "returned_chars": 539,
+          "elapsed_ms": 1.2766730000000024,
+          "returned_source_ids": [
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1",
+            "quality-literal2::m-literal2",
+            "quality-literal3::m-literal3",
+            "quality-literal4::m-literal4"
+          ],
+          "returned_text": "USER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1.\nUSER\nO projeto Mineral2 adotou o parametro limite operacional 22 quilogramas. Codigo certificado: CERT-AX2.\nUSER\nO projeto Mineral3 adotou o parametro limite operacional 23 quilogramas. Codigo certificado: CERT-AX3.\nUSER\nO projeto Mineral4 adotou o parametro limite operacional 24 quilogramas. Codigo certificado: CERT-AX4."
+        },
+        {
+          "id": "literal1",
+          "category": "literal",
+          "query": "Mineral1 limite operacional",
+          "expected": [
+            {
+              "conversation_id": "quality-literal1",
+              "source_id": "m-literal1"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 5,
+          "returned_chars": 539,
+          "elapsed_ms": 0.2748239999999953,
+          "returned_source_ids": [
+            "quality-literal1::m-literal1",
+            "quality-literal0::m-literal0",
+            "quality-literal2::m-literal2",
+            "quality-literal3::m-literal3",
+            "quality-literal4::m-literal4"
+          ],
+          "returned_text": "USER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral2 adotou o parametro limite operacional 22 quilogramas. Codigo certificado: CERT-AX2.\nUSER\nO projeto Mineral3 adotou o parametro limite operacional 23 quilogramas. Codigo certificado: CERT-AX3.\nUSER\nO projeto Mineral4 adotou o parametro limite operacional 24 quilogramas. Codigo certificado: CERT-AX4."
+        },
+        {
+          "id": "literal2",
+          "category": "literal",
+          "query": "Mineral2 limite operacional",
+          "expected": [
+            {
+              "conversation_id": "quality-literal2",
+              "source_id": "m-literal2"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 5,
+          "returned_chars": 539,
+          "elapsed_ms": 0.14450700000000438,
+          "returned_source_ids": [
+            "quality-literal2::m-literal2",
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1",
+            "quality-literal3::m-literal3",
+            "quality-literal4::m-literal4"
+          ],
+          "returned_text": "USER\nO projeto Mineral2 adotou o parametro limite operacional 22 quilogramas. Codigo certificado: CERT-AX2.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1.\nUSER\nO projeto Mineral3 adotou o parametro limite operacional 23 quilogramas. Codigo certificado: CERT-AX3.\nUSER\nO projeto Mineral4 adotou o parametro limite operacional 24 quilogramas. Codigo certificado: CERT-AX4."
+        },
+        {
+          "id": "literal3",
+          "category": "literal",
+          "query": "Mineral3 limite operacional",
+          "expected": [
+            {
+              "conversation_id": "quality-literal3",
+              "source_id": "m-literal3"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 5,
+          "returned_chars": 539,
+          "elapsed_ms": 0.07979000000000269,
+          "returned_source_ids": [
+            "quality-literal3::m-literal3",
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1",
+            "quality-literal2::m-literal2",
+            "quality-literal4::m-literal4"
+          ],
+          "returned_text": "USER\nO projeto Mineral3 adotou o parametro limite operacional 23 quilogramas. Codigo certificado: CERT-AX3.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1.\nUSER\nO projeto Mineral2 adotou o parametro limite operacional 22 quilogramas. Codigo certificado: CERT-AX2.\nUSER\nO projeto Mineral4 adotou o parametro limite operacional 24 quilogramas. Codigo certificado: CERT-AX4."
+        },
+        {
+          "id": "literal4",
+          "category": "literal",
+          "query": "Mineral4 limite operacional",
+          "expected": [
+            {
+              "conversation_id": "quality-literal4",
+              "source_id": "m-literal4"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 5,
+          "returned_chars": 539,
+          "elapsed_ms": 0.060811999999998534,
+          "returned_source_ids": [
+            "quality-literal4::m-literal4",
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1",
+            "quality-literal2::m-literal2",
+            "quality-literal3::m-literal3"
+          ],
+          "returned_text": "USER\nO projeto Mineral4 adotou o parametro limite operacional 24 quilogramas. Codigo certificado: CERT-AX4.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1.\nUSER\nO projeto Mineral2 adotou o parametro limite operacional 22 quilogramas. Codigo certificado: CERT-AX2.\nUSER\nO projeto Mineral3 adotou o parametro limite operacional 23 quilogramas. Codigo certificado: CERT-AX3."
+        },
+        {
+          "id": "hash0",
+          "category": "identifier",
+          "query": "0x1ec9f8639ffe6fed4b25ee37646148a19e68b7f6",
+          "expected": [
+            {
+              "conversation_id": "quality-hash0",
+              "source_id": "m-hash0"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 1,
+          "returned_chars": 88,
+          "elapsed_ms": 0.026841000000004556,
+          "returned_source_ids": [
+            "quality-hash0::m-hash0"
+          ],
+          "returned_text": "USER\nContrato de referencia para a filial 0: 0x1ec9f8639ffe6fed4b25ee37646148a19e68b7f6."
+        },
+        {
+          "id": "hash1",
+          "category": "identifier",
+          "query": "0xe72f7b8420e7153ebdf57a144c5e58a78fec0bc1",
+          "expected": [
+            {
+              "conversation_id": "quality-hash1",
+              "source_id": "m-hash1"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 1,
+          "returned_chars": 88,
+          "elapsed_ms": 0.017526000000003705,
+          "returned_source_ids": [
+            "quality-hash1::m-hash1"
+          ],
+          "returned_text": "USER\nContrato de referencia para a filial 1: 0xe72f7b8420e7153ebdf57a144c5e58a78fec0bc1."
+        },
+        {
+          "id": "hash2",
+          "category": "identifier",
+          "query": "0xd0bb14cc19fb3d977d3975d5593cb0efa89dfa29",
+          "expected": [
+            {
+              "conversation_id": "quality-hash2",
+              "source_id": "m-hash2"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 1,
+          "returned_chars": 88,
+          "elapsed_ms": 0.016084000000006426,
+          "returned_source_ids": [
+            "quality-hash2::m-hash2"
+          ],
+          "returned_text": "USER\nContrato de referencia para a filial 2: 0xd0bb14cc19fb3d977d3975d5593cb0efa89dfa29."
+        },
+        {
+          "id": "hash3",
+          "category": "identifier",
+          "query": "0x28110b1d27a80206b55b524b09bb731d19382f4e",
+          "expected": [
+            {
+              "conversation_id": "quality-hash3",
+              "source_id": "m-hash3"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 1,
+          "returned_chars": 88,
+          "elapsed_ms": 0.01878899999999817,
+          "returned_source_ids": [
+            "quality-hash3::m-hash3"
+          ],
+          "returned_text": "USER\nContrato de referencia para a filial 3: 0x28110b1d27a80206b55b524b09bb731d19382f4e."
+        },
+        {
+          "id": "hash4",
+          "category": "identifier",
+          "query": "0x3bbbd75d4a076c8eba0e374718e040a6ac475999",
+          "expected": [
+            {
+              "conversation_id": "quality-hash4",
+              "source_id": "m-hash4"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 1,
+          "returned_chars": 88,
+          "elapsed_ms": 0.018368000000009488,
+          "returned_source_ids": [
+            "quality-hash4::m-hash4"
+          ],
+          "returned_text": "USER\nContrato de referencia para a filial 4: 0x3bbbd75d4a076c8eba0e374718e040a6ac475999."
+        },
+        {
+          "id": "typo0",
+          "category": "typo",
+          "query": "Explorecham",
+          "expected": [
+            {
+              "conversation_id": "quality-typo0",
+              "source_id": "m-typo0"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 1,
+          "returned_chars": 63,
+          "elapsed_ms": 0.5131930000000011,
+          "returned_source_ids": [
+            "quality-typo0::m-typo0"
+          ],
+          "returned_text": "USER\nExploreChem registra a chave secreta ficcional FATO-0-QXZ."
+        },
+        {
+          "id": "typo1",
+          "category": "typo",
+          "query": "Verificadpra",
+          "expected": [
+            {
+              "conversation_id": "quality-typo1",
+              "source_id": "m-typo1"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 1,
+          "returned_chars": 64,
+          "elapsed_ms": 0.2857800000000026,
+          "returned_source_ids": [
+            "quality-typo1::m-typo1"
+          ],
+          "returned_text": "USER\nVerificadora registra a chave secreta ficcional FATO-1-QXZ."
+        },
+        {
+          "id": "typo2",
+          "category": "typo",
+          "query": "Rastreabilidafe",
+          "expected": [
+            {
+              "conversation_id": "quality-typo2",
+              "source_id": "m-typo2"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 10,
+          "returned_chars": 3464,
+          "elapsed_ms": 3.7072230000000133,
+          "returned_source_ids": [
+            "quality-typo2::m-typo2",
+            "projeto-00000::3976ae833a4eb38ad6696efa9b4278f7",
+            "projeto-00000::11f865ecce1ce4e4c7c7d4c2fc2315ff",
+            "projeto-00000::64de74adf5d3119f1508821b96364750",
+            "projeto-00000::24eb7f7497f1cc6ccabd0c5d87422247",
+            "projeto-00000::2b72488ec457d2f1f6dcbfdcf2940e7e",
+            "projeto-00000::3d4c34482b7096d60e04f5ac8f89757a",
+            "projeto-00000::27b802cacd33a944e3e7017d70085416",
+            "projeto-00000::a7fc1fd21857a2348bbb51c67e96da2f",
+            "projeto-00000::b8bddf1a927ed92789b630fc3a91f90e"
+          ],
+          "returned_text": "USER\nRastreabilidade registra a chave secreta ficcional FATO-2-QXZ.\nUSER\nRegistro registro-000000 do projeto-00000. A laboratorio acompanha o lote lote-c630494885d4 de neodimio. A quantidade declarada foi 1000 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x46046f81e4f3af905ac7b0632a32c0bb5d0976ec.\n\nASSISTANT\nRegistro registro-000001 do projeto-00000. A transportadora acompanha o lote lote-7cc4eaaf2313 de cobalto. A quantidade declarada foi 1001 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xf0369fccc1c2c86117197ae78432722d31ed600d.\n\nUSER\nRegistro registro-000002 do projeto-00000. A mineradora acompanha o lote lote-fd27700e579d de litio. A quantidade declarada foi 1002 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x06acc749550acd623b921e8eff448d206c625656.\n\nASSISTANT\nRegistro registro-000003 do projeto-00000. A purificadora acompanha o lote lote-315fcf947ffc de cerio. A quantidade declarada foi 1003 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xb3277bb3d6a9ee865f98b7fc0747fb939a7ab1f9.\n\nUSER\nRegistro registro-000004 do projeto-00000. A fabricante acompanha o lote lote-2d0a7116d9cb de disprosio. A quantidade declarada foi 1004 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xc4eed210fff7d292fea599f53d5d72fedd025f16.\n\nASSISTANT\nRegistro registro-000005 do projeto-00000. A recicladora acompanha o lote lote-305c9c294959 de lantanio. A quantidade declarada foi 1005 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x5304acd32186a248ac63fa59e758a7085ab7ef5f.\n\nUSER\nRegistro registro-000006 do projeto-00000. A laboratorio acompanha o lote lote-13d5b5352685 de neodimio. A quantidade declarada foi 1006 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xe51eee4e679c548bb1a96203a5299e7558a2bf50.\n\nASSISTANT\nRegistro registro-000007 do projeto-00000. A transportadora acompanha o lote lote-f5a47f4882c5 de cobalto. A quantidade declarada foi 1007 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xda5e6dc0649ac6aa2038f9c14d2ab6d6d63c6fa5.\n\nUSER\nRegistro registro-000008 do projeto-00000. A mineradora acompanha o lote lote-895bb41161ed de litio. A quantidade declarada foi 1008 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x7600aa32a39ea529358fb1fe5c64e729fcb8e873."
+        },
+        {
+          "id": "typo3",
+          "category": "typo",
+          "query": "Consolidacap",
+          "expected": [
+            {
+              "conversation_id": "quality-typo3",
+              "source_id": "m-typo3"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 1,
+          "returned_chars": 64,
+          "elapsed_ms": 0.19607500000000755,
+          "returned_source_ids": [
+            "quality-typo3::m-typo3"
+          ],
+          "returned_text": "USER\nConsolidacao registra a chave secreta ficcional FATO-3-QXZ."
+        },
+        {
+          "id": "typo4",
+          "category": "typo",
+          "query": "Transportadpra",
+          "expected": [
+            {
+              "conversation_id": "quality-typo4",
+              "source_id": "m-typo4"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 27,
+          "returned_chars": 9878,
+          "elapsed_ms": 0.9726650000000063,
+          "returned_source_ids": [
+            "quality-typo4::m-typo4",
+            "projeto-00000::3976ae833a4eb38ad6696efa9b4278f7",
+            "projeto-00000::11f865ecce1ce4e4c7c7d4c2fc2315ff",
+            "projeto-00000::64de74adf5d3119f1508821b96364750",
+            "projeto-00000::24eb7f7497f1cc6ccabd0c5d87422247",
+            "projeto-00000::27b802cacd33a944e3e7017d70085416",
+            "projeto-00000::a7fc1fd21857a2348bbb51c67e96da2f",
+            "projeto-00000::b8bddf1a927ed92789b630fc3a91f90e",
+            "projeto-00000::57781ccbcb36bd57f0e47ed2f5dde81e",
+            "projeto-00000::c029f7e3417d1211cf22b2be10e1bd4f",
+            "projeto-00000::4fcaed6dfb7ff9dda5c5be2b181cd5e6",
+            "projeto-00000::2ae580346304653c61cd741938c30543",
+            "projeto-00000::7baa71c40efde3dfbd0bda32c90735dc",
+            "projeto-00000::6700133aac442f1b9ae6a8eae9bb64e3",
+            "projeto-00000::f849b20a0ff2f4137a84a284891fad5b",
+            "projeto-00001::df893458ba35616da5d6746d17d2b43a",
+            "projeto-00001::38fd62eea473b59f6e8cfcc22eca80a6",
+            "projeto-00001::c5170c1b4d1603135c99e37c5132177d",
+            "projeto-00001::64d44be85e1d46085584fb15d909a704",
+            "projeto-00001::a131d39fd37a06536c7165619fcf7769",
+            "projeto-00001::e113a52b0bef8a822a3b7a8d83518fb4",
+            "projeto-00001::4072fdbf2e93457395cc3b8e37c7b77b",
+            "projeto-00001::3a8d4c59ab13a7890a1dad8f6eb488af",
+            "projeto-00001::3275715ef73b18f36d89eb6b7fca24df",
+            "projeto-00001::5443f8030e2c73b843033c20bf2c5d63",
+            "projeto-00001::a07b44e46543614804bd07e151b6e632",
+            "projeto-00001::bed25f4045d6b888320330981d05d6ca"
+          ],
+          "returned_text": "USER\nTransportadora registra a chave secreta ficcional FATO-4-QXZ.\nUSER\nRegistro registro-000000 do projeto-00000. A laboratorio acompanha o lote lote-c630494885d4 de neodimio. A quantidade declarada foi 1000 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x46046f81e4f3af905ac7b0632a32c0bb5d0976ec.\n\nASSISTANT\nRegistro registro-000001 do projeto-00000. A transportadora acompanha o lote lote-7cc4eaaf2313 de cobalto. A quantidade declarada foi 1001 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xf0369fccc1c2c86117197ae78432722d31ed600d.\n\nUSER\nRegistro registro-000002 do projeto-00000. A mineradora acompanha o lote lote-fd27700e579d de litio. A quantidade declarada foi 1002 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x06acc749550acd623b921e8eff448d206c625656.\n\nASSISTANT\nRegistro registro-000003 do projeto-00000. A purificadora acompanha o lote lote-315fcf947ffc de cerio. A quantidade declarada foi 1003 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xb3277bb3d6a9ee865f98b7fc0747fb939a7ab1f9.\nUSER\nRegistro registro-000006 do projeto-00000. A laboratorio acompanha o lote lote-13d5b5352685 de neodimio. A quantidade declarada foi 1006 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xe51eee4e679c548bb1a96203a5299e7558a2bf50.\n\nASSISTANT\nRegistro registro-000007 do projeto-00000. A transportadora acompanha o lote lote-f5a47f4882c5 de cobalto. A quantidade declarada foi 1007 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xda5e6dc0649ac6aa2038f9c14d2ab6d6d63c6fa5.\n\nUSER\nRegistro registro-000008 do projeto-00000. A mineradora acompanha o lote lote-895bb41161ed de litio. A quantidade declarada foi 1008 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x7600aa32a39ea529358fb1fe5c64e729fcb8e873.\n\nASSISTANT\nRegistro registro-000009 do projeto-00000. A purificadora acompanha o lote lote-e61c7d6f0557 de cerio. A quantidade declarada foi 1009 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x3a8a9e3c265103cfdf3916b3a9e483062de59b50.\nUSER\nRegistro registro-000012 do projeto-00000. A laboratorio acompanha o lote lote-b2b802996532 de neodimio. A quantidade declarada foi 1012 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x813d33a4cfa08bc8853b6d51b688d5a264c5335d.\n\nASSISTANT\nRegistro registro-000013 do projeto-00000. A transportadora acompanha o lote lote-2d9322742af8 de cobalto. A quantidade declarada foi 1013 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x2f96a43f6736f1f27fa95c3f36b6b1208d1d4be5.\n\nUSER\nRegistro registro-000014 do projeto-00000. A mineradora acompanha o lote lote-14377f3f8c37 de litio. A quantidade declarada foi 1014 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xb8482d1068fe8cf37b4428471dfd61ac95107e11.\n\nASSISTANT\nRegistro registro-000015 do projeto-00000. A purificadora acompanha o lote lote-de444e5b0b26 de cerio. A quantidade declarada foi 1015 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x21e086447609d678760eb54c2014ddafb7d74d31.\nUSER\nRegistro registro-000018 do projeto-00000. A laboratorio acompanha o lote lote-06f12d68362f de neodimio. A quantidade declarada foi 1018 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x33f7099e247a7c8ae12d90f9bedc3ac629817ac6.\n\nASSISTANT\nRegistro registro-000019 do projeto-00000. A transportadora acompanha o lote lote-6f06fc0ae247 de cobalto. A quantidade declarada foi 1019 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x680bcfce3290f77b22e4735305fd27d6bea3bafd.\nUSER\nRegistro registro-000024 do projeto-00001. A laboratorio acompanha o lote lote-c10344c5d2f4 de neodimio. A quantidade declarada foi 1024 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x94e523c94d79be45c0fbb257d1e56d7489fa69fc.\n\nASSISTANT\nRegistro registro-000025 do projeto-00001. A transportadora acompanha o lote lote-fe12c256bc95 de cobalto. A quantidade declarada foi 1025 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x44bb2b4a48506ed46c26f1cefd6eedcc97055e6b.\n\nUSER\nRegistro registro-000026 do projeto-00001. A mineradora acompanha o lote lote-a403f2a10f85 de litio. A quantidade declarada foi 1026 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x8bf27115c16b569f7399e0c422fd65a006e9a050.\n\nASSISTANT\nRegistro registro-000027 do projeto-00001. A purificadora acompanha o lote lote-ad3343d40379 de cerio. A quantidade declarada foi 1027 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xc21c94b3bd127784c632a75fa317ffbc2a6b5011.\nUSER\nRegistro registro-000030 do projeto-00001. A laboratorio acompanha o lote lote-ca1dbbb0fb08 de neodimio. A quantidade declarada foi 1030 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x97e1fd69c8f3d905fdbe765fdea4045d6229af6f.\n\nASSISTANT\nRegistro registro-000031 do projeto-00001. A transportadora acompanha o lote lote-df36db230aed de cobalto. A quantidade declarada foi 1031 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x6fcdc23f173de479ce9d6e1185739db037a334d7.\n\nUSER\nRegistro registro-000032 do projeto-00001. A mineradora acompanha o lote lote-aa42d27ba617 de litio. A quantidade declarada foi 1032 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x59e0058a28b1e518bef0658b6547c95c116202e1.\n\nASSISTANT\nRegistro registro-000033 do projeto-00001. A purificadora acompanha o lote lote-397086c03d46 de cerio. A quantidade declarada foi 1033 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xffe4ce36033c81d62cb371975859d2bbe9b0237b.\nUSER\nRegistro registro-000036 do projeto-00001. A laboratorio acompanha o lote lote-f3d5d78ec408 de neodimio. A quantidade declarada foi 1036 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xd8eb1be07780b902fce0a855a8c047fac03f4501.\n\nASSISTANT\nRegistro registro-000037 do projeto-00001. A transportadora acompanha o lote lote-9f733b692d9f de cobalto. A quantidade declarada foi 1037 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0x6f9dd2ca53a688ea71f501034a578150a9edf3ac.\n\nUSER\nRegistro registro-000038 do projeto-00001. A mineradora acompanha o lote lote-a1ef4603df84 de litio. A quantidade declarada foi 1038 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xf6483190a778399bf4f8ef4139cda03aa340de07.\n\nASSISTANT\nRegistro registro-000039 do projeto-00001. A purificadora acompanha o lote lote-60c1994f6ede de cerio. A quantidade declarada foi 1039 kg. O protocolo exige rastreabilidade, evidencias e auditoria do material. O responsavel registra a origem, o destino e as alteracoes antes de concluir a transferencia. Referencia tecnica: 0xffaff1690dc93855366dbe747c54fcbf3ea53b22."
+        },
+        {
+          "id": "semantic0",
+          "category": "paraphrase",
+          "query": "Por que o automovel parou na estrada?",
+          "expected": [
+            {
+              "conversation_id": "quality-semantic0",
+              "source_id": "m-semantic0"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 0,
+          "evidence_recall": 0,
+          "all_evidence": false,
+          "answer_evidence_present": false,
+          "abstained": true,
+          "returned_sources": 0,
+          "returned_chars": 0,
+          "elapsed_ms": 0.2848189999999988,
+          "returned_source_ids": [],
+          "returned_text": ""
+        },
+        {
+          "id": "semantic1",
+          "category": "paraphrase",
+          "query": "Qual foi o motivo do cancelamento da reuniao por chuva?",
+          "expected": [
+            {
+              "conversation_id": "quality-semantic1",
+              "source_id": "m-semantic1"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 0,
+          "evidence_recall": 0,
+          "all_evidence": false,
+          "answer_evidence_present": false,
+          "abstained": true,
+          "returned_sources": 0,
+          "returned_chars": 0,
+          "elapsed_ms": 0.496026999999998,
+          "returned_source_ids": [],
+          "returned_text": ""
+        },
+        {
+          "id": "semantic2",
+          "category": "paraphrase",
+          "query": "Houve desconto no produto comprado?",
+          "expected": [
+            {
+              "conversation_id": "quality-semantic2",
+              "source_id": "m-semantic2"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 0,
+          "evidence_recall": 0,
+          "all_evidence": false,
+          "answer_evidence_present": false,
+          "abstained": true,
+          "returned_sources": 0,
+          "returned_chars": 0,
+          "elapsed_ms": 0.3794210000000078,
+          "returned_source_ids": [],
+          "returned_text": ""
+        },
+        {
+          "id": "semantic3",
+          "category": "paraphrase",
+          "query": "Onde a cliente recebeu o pacote?",
+          "expected": [
+            {
+              "conversation_id": "quality-semantic3",
+              "source_id": "m-semantic3"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 0,
+          "evidence_recall": 0,
+          "all_evidence": false,
+          "answer_evidence_present": false,
+          "abstained": true,
+          "returned_sources": 0,
+          "returned_chars": 0,
+          "elapsed_ms": 0.10622000000000753,
+          "returned_source_ids": [],
+          "returned_text": ""
+        },
+        {
+          "id": "semantic4",
+          "category": "paraphrase",
+          "query": "Por que o empregado nao conseguiu entrar na conta?",
+          "expected": [
+            {
+              "conversation_id": "quality-semantic4",
+              "source_id": "m-semantic4"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 0,
+          "evidence_recall": 0,
+          "all_evidence": false,
+          "answer_evidence_present": false,
+          "abstained": true,
+          "returned_sources": 0,
+          "returned_chars": 0,
+          "elapsed_ms": 0.2437270000000069,
+          "returned_source_ids": [],
+          "returned_text": ""
+        },
+        {
+          "id": "neighbor0",
+          "category": "neighbor",
+          "query": "Nexo0 decisao frete",
+          "expected": [
+            {
+              "conversation_id": "quality-neighbor0",
+              "source_id": "a-answer"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 15,
+          "returned_chars": 924,
+          "elapsed_ms": 0.1949639999999988,
+          "returned_source_ids": [
+            "quality-neighbor0::b-unrelated",
+            "quality-neighbor0::m-neighbor0",
+            "quality-neighbor0::a-answer",
+            "quality-neighbor1::b-unrelated",
+            "quality-neighbor1::m-neighbor1",
+            "quality-neighbor1::a-answer",
+            "quality-neighbor2::b-unrelated",
+            "quality-neighbor2::m-neighbor2",
+            "quality-neighbor2::a-answer",
+            "quality-neighbor3::b-unrelated",
+            "quality-neighbor3::m-neighbor3",
+            "quality-neighbor3::a-answer",
+            "quality-neighbor4::b-unrelated",
+            "quality-neighbor4::m-neighbor4",
+            "quality-neighbor4::a-answer"
+          ],
+          "returned_text": "USER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo0 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-0 e pagar 70 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo1 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-1 e pagar 71 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo2 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-2 e pagar 72 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo3 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-3 e pagar 73 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo4 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-4 e pagar 74 reais."
+        },
+        {
+          "id": "neighbor1",
+          "category": "neighbor",
+          "query": "Nexo1 decisao frete",
+          "expected": [
+            {
+              "conversation_id": "quality-neighbor1",
+              "source_id": "a-answer"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 15,
+          "returned_chars": 924,
+          "elapsed_ms": 0.48142500000000155,
+          "returned_source_ids": [
+            "quality-neighbor1::b-unrelated",
+            "quality-neighbor1::m-neighbor1",
+            "quality-neighbor1::a-answer",
+            "quality-neighbor0::b-unrelated",
+            "quality-neighbor0::m-neighbor0",
+            "quality-neighbor0::a-answer",
+            "quality-neighbor2::b-unrelated",
+            "quality-neighbor2::m-neighbor2",
+            "quality-neighbor2::a-answer",
+            "quality-neighbor3::b-unrelated",
+            "quality-neighbor3::m-neighbor3",
+            "quality-neighbor3::a-answer",
+            "quality-neighbor4::b-unrelated",
+            "quality-neighbor4::m-neighbor4",
+            "quality-neighbor4::a-answer"
+          ],
+          "returned_text": "USER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo1 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-1 e pagar 71 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo0 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-0 e pagar 70 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo2 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-2 e pagar 72 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo3 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-3 e pagar 73 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo4 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-4 e pagar 74 reais."
+        },
+        {
+          "id": "neighbor2",
+          "category": "neighbor",
+          "query": "Nexo2 decisao frete",
+          "expected": [
+            {
+              "conversation_id": "quality-neighbor2",
+              "source_id": "a-answer"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 15,
+          "returned_chars": 924,
+          "elapsed_ms": 0.2542930000000041,
+          "returned_source_ids": [
+            "quality-neighbor2::b-unrelated",
+            "quality-neighbor2::m-neighbor2",
+            "quality-neighbor2::a-answer",
+            "quality-neighbor0::b-unrelated",
+            "quality-neighbor0::m-neighbor0",
+            "quality-neighbor0::a-answer",
+            "quality-neighbor1::b-unrelated",
+            "quality-neighbor1::m-neighbor1",
+            "quality-neighbor1::a-answer",
+            "quality-neighbor3::b-unrelated",
+            "quality-neighbor3::m-neighbor3",
+            "quality-neighbor3::a-answer",
+            "quality-neighbor4::b-unrelated",
+            "quality-neighbor4::m-neighbor4",
+            "quality-neighbor4::a-answer"
+          ],
+          "returned_text": "USER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo2 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-2 e pagar 72 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo0 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-0 e pagar 70 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo1 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-1 e pagar 71 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo3 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-3 e pagar 73 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo4 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-4 e pagar 74 reais."
+        },
+        {
+          "id": "neighbor3",
+          "category": "neighbor",
+          "query": "Nexo3 decisao frete",
+          "expected": [
+            {
+              "conversation_id": "quality-neighbor3",
+              "source_id": "a-answer"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 15,
+          "returned_chars": 924,
+          "elapsed_ms": 0.1670609999999897,
+          "returned_source_ids": [
+            "quality-neighbor3::b-unrelated",
+            "quality-neighbor3::m-neighbor3",
+            "quality-neighbor3::a-answer",
+            "quality-neighbor0::b-unrelated",
+            "quality-neighbor0::m-neighbor0",
+            "quality-neighbor0::a-answer",
+            "quality-neighbor1::b-unrelated",
+            "quality-neighbor1::m-neighbor1",
+            "quality-neighbor1::a-answer",
+            "quality-neighbor2::b-unrelated",
+            "quality-neighbor2::m-neighbor2",
+            "quality-neighbor2::a-answer",
+            "quality-neighbor4::b-unrelated",
+            "quality-neighbor4::m-neighbor4",
+            "quality-neighbor4::a-answer"
+          ],
+          "returned_text": "USER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo3 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-3 e pagar 73 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo0 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-0 e pagar 70 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo1 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-1 e pagar 71 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo2 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-2 e pagar 72 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo4 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-4 e pagar 74 reais."
+        },
+        {
+          "id": "neighbor4",
+          "category": "neighbor",
+          "query": "Nexo4 decisao frete",
+          "expected": [
+            {
+              "conversation_id": "quality-neighbor4",
+              "source_id": "a-answer"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 15,
+          "returned_chars": 924,
+          "elapsed_ms": 0.14462699999999984,
+          "returned_source_ids": [
+            "quality-neighbor4::b-unrelated",
+            "quality-neighbor4::m-neighbor4",
+            "quality-neighbor4::a-answer",
+            "quality-neighbor0::b-unrelated",
+            "quality-neighbor0::m-neighbor0",
+            "quality-neighbor0::a-answer",
+            "quality-neighbor1::b-unrelated",
+            "quality-neighbor1::m-neighbor1",
+            "quality-neighbor1::a-answer",
+            "quality-neighbor2::b-unrelated",
+            "quality-neighbor2::m-neighbor2",
+            "quality-neighbor2::a-answer",
+            "quality-neighbor3::b-unrelated",
+            "quality-neighbor3::m-neighbor3",
+            "quality-neighbor3::a-answer"
+          ],
+          "returned_text": "USER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo4 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-4 e pagar 74 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo0 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-0 e pagar 70 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo1 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-1 e pagar 71 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo2 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-2 e pagar 72 reais.\nUSER\nObservacao administrativa sem a resposta procurada.\n\nUSER\nQual foi a decisao do projeto Nexo3 sobre o frete?\n\nASSISTANT\nA decisao foi contratar a empresa SERRA-3 e pagar 73 reais."
+        },
+        {
+          "id": "update0",
+          "category": "knowledge_update",
+          "query": "Vega0 parametro atual",
+          "expected": [
+            {
+              "conversation_id": "quality-update0",
+              "source_id": "m-update0"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 12,
+          "returned_chars": 1105,
+          "elapsed_ms": 0.17994099999999946,
+          "returned_source_ids": [
+            "quality-update0::z-old",
+            "quality-update0::m-update0",
+            "quality-update1::z-old",
+            "quality-update1::m-update1",
+            "quality-update2::z-old",
+            "quality-update2::m-update2",
+            "quality-update3::z-old",
+            "quality-update3::m-update3",
+            "quality-update4::z-old",
+            "quality-update4::m-update4",
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1"
+          ],
+          "returned_text": "USER\nO parametro da linha temporal Vega0 era 10 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega0 agora vale 60 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega1 era 11 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega1 agora vale 61 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega2 era 12 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega2 agora vale 62 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega3 era 13 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega3 agora vale 63 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega4 era 14 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega4 agora vale 64 unidades; substitui o valor de janeiro.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1."
+        },
+        {
+          "id": "update1",
+          "category": "knowledge_update",
+          "query": "Vega1 parametro atual",
+          "expected": [
+            {
+              "conversation_id": "quality-update1",
+              "source_id": "m-update1"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 12,
+          "returned_chars": 1105,
+          "elapsed_ms": 0.14643099999999265,
+          "returned_source_ids": [
+            "quality-update1::z-old",
+            "quality-update1::m-update1",
+            "quality-update0::z-old",
+            "quality-update0::m-update0",
+            "quality-update2::z-old",
+            "quality-update2::m-update2",
+            "quality-update3::z-old",
+            "quality-update3::m-update3",
+            "quality-update4::z-old",
+            "quality-update4::m-update4",
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1"
+          ],
+          "returned_text": "USER\nO parametro da linha temporal Vega1 era 11 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega1 agora vale 61 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega0 era 10 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega0 agora vale 60 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega2 era 12 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega2 agora vale 62 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega3 era 13 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega3 agora vale 63 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega4 era 14 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega4 agora vale 64 unidades; substitui o valor de janeiro.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1."
+        },
+        {
+          "id": "update2",
+          "category": "knowledge_update",
+          "query": "Vega2 parametro atual",
+          "expected": [
+            {
+              "conversation_id": "quality-update2",
+              "source_id": "m-update2"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 12,
+          "returned_chars": 1105,
+          "elapsed_ms": 0.13014599999999632,
+          "returned_source_ids": [
+            "quality-update2::z-old",
+            "quality-update2::m-update2",
+            "quality-update0::z-old",
+            "quality-update0::m-update0",
+            "quality-update1::z-old",
+            "quality-update1::m-update1",
+            "quality-update3::z-old",
+            "quality-update3::m-update3",
+            "quality-update4::z-old",
+            "quality-update4::m-update4",
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1"
+          ],
+          "returned_text": "USER\nO parametro da linha temporal Vega2 era 12 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega2 agora vale 62 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega0 era 10 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega0 agora vale 60 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega1 era 11 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega1 agora vale 61 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega3 era 13 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega3 agora vale 63 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega4 era 14 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega4 agora vale 64 unidades; substitui o valor de janeiro.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1."
+        },
+        {
+          "id": "update3",
+          "category": "knowledge_update",
+          "query": "Vega3 parametro atual",
+          "expected": [
+            {
+              "conversation_id": "quality-update3",
+              "source_id": "m-update3"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 12,
+          "returned_chars": 1105,
+          "elapsed_ms": 0.12964500000001067,
+          "returned_source_ids": [
+            "quality-update3::z-old",
+            "quality-update3::m-update3",
+            "quality-update0::z-old",
+            "quality-update0::m-update0",
+            "quality-update1::z-old",
+            "quality-update1::m-update1",
+            "quality-update2::z-old",
+            "quality-update2::m-update2",
+            "quality-update4::z-old",
+            "quality-update4::m-update4",
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1"
+          ],
+          "returned_text": "USER\nO parametro da linha temporal Vega3 era 13 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega3 agora vale 63 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega0 era 10 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega0 agora vale 60 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega1 era 11 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega1 agora vale 61 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega2 era 12 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega2 agora vale 62 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega4 era 14 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega4 agora vale 64 unidades; substitui o valor de janeiro.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1."
+        },
+        {
+          "id": "update4",
+          "category": "knowledge_update",
+          "query": "Vega4 parametro atual",
+          "expected": [
+            {
+              "conversation_id": "quality-update4",
+              "source_id": "m-update4"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 12,
+          "returned_chars": 1105,
+          "elapsed_ms": 0.12449700000000519,
+          "returned_source_ids": [
+            "quality-update4::z-old",
+            "quality-update4::m-update4",
+            "quality-update0::z-old",
+            "quality-update0::m-update0",
+            "quality-update1::z-old",
+            "quality-update1::m-update1",
+            "quality-update2::z-old",
+            "quality-update2::m-update2",
+            "quality-update3::z-old",
+            "quality-update3::m-update3",
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1"
+          ],
+          "returned_text": "USER\nO parametro da linha temporal Vega4 era 14 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega4 agora vale 64 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega0 era 10 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega0 agora vale 60 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega1 era 11 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega1 agora vale 61 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega2 era 12 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega2 agora vale 62 unidades; substitui o valor de janeiro.\nUSER\nO parametro da linha temporal Vega3 era 13 unidades em janeiro.\n\nUSER\nAtualizacao: o parametro da linha temporal Vega3 agora vale 63 unidades; substitui o valor de janeiro.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1."
+        },
+        {
+          "id": "scope0",
+          "category": "scope",
+          "query": "Lumen0 chave",
+          "expected": [
+            {
+              "conversation_id": "scoped-team0",
+              "source_id": "m-scope0"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 1,
+          "returned_chars": 48,
+          "elapsed_ms": 0.060701000000008776,
+          "returned_source_ids": [
+            "scoped-team0::m-scope0"
+          ],
+          "returned_text": "USER\nA chave Lumen0 pertence ao grupo CORRETO-0."
+        },
+        {
+          "id": "scope1",
+          "category": "scope",
+          "query": "Lumen1 chave",
+          "expected": [
+            {
+              "conversation_id": "scoped-team1",
+              "source_id": "m-scope1"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 1,
+          "returned_chars": 48,
+          "elapsed_ms": 0.019399999999990314,
+          "returned_source_ids": [
+            "scoped-team1::m-scope1"
+          ],
+          "returned_text": "USER\nA chave Lumen1 pertence ao grupo CORRETO-1."
+        },
+        {
+          "id": "scope2",
+          "category": "scope",
+          "query": "Lumen2 chave",
+          "expected": [
+            {
+              "conversation_id": "scoped-team2",
+              "source_id": "m-scope2"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 1,
+          "returned_chars": 48,
+          "elapsed_ms": 0.017837000000000103,
+          "returned_source_ids": [
+            "scoped-team2::m-scope2"
+          ],
+          "returned_text": "USER\nA chave Lumen2 pertence ao grupo CORRETO-2."
+        },
+        {
+          "id": "scope3",
+          "category": "scope",
+          "query": "Lumen3 chave",
+          "expected": [
+            {
+              "conversation_id": "scoped-team3",
+              "source_id": "m-scope3"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 1,
+          "returned_chars": 48,
+          "elapsed_ms": 0.05456200000000422,
+          "returned_source_ids": [
+            "scoped-team3::m-scope3"
+          ],
+          "returned_text": "USER\nA chave Lumen3 pertence ao grupo CORRETO-3."
+        },
+        {
+          "id": "scope4",
+          "category": "scope",
+          "query": "Lumen4 chave",
+          "expected": [
+            {
+              "conversation_id": "scoped-team4",
+              "source_id": "m-scope4"
+            }
+          ],
+          "expected_count": 1,
+          "found_count": 1,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 1,
+          "returned_chars": 48,
+          "elapsed_ms": 0.018647999999998888,
+          "returned_source_ids": [
+            "scoped-team4::m-scope4"
+          ],
+          "returned_text": "USER\nA chave Lumen4 pertence ao grupo CORRETO-4."
+        },
+        {
+          "id": "join0",
+          "category": "multi_evidence",
+          "query": "Ponte0 transferencia limite",
+          "expected": [
+            {
+              "conversation_id": "quality-join0",
+              "source_id": "m-join0"
+            },
+            {
+              "conversation_id": "quality-join0",
+              "source_id": "a-second"
+            }
+          ],
+          "expected_count": 2,
+          "found_count": 2,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 17,
+          "returned_chars": 1305,
+          "elapsed_ms": 3.012438000000003,
+          "returned_source_ids": [
+            "quality-join0::b-gap",
+            "quality-join0::m-join0",
+            "quality-join0::a-second",
+            "quality-join1::b-gap",
+            "quality-join1::m-join1",
+            "quality-join1::a-second",
+            "quality-join2::b-gap",
+            "quality-join2::m-join2",
+            "quality-join2::a-second",
+            "quality-join3::b-gap",
+            "quality-join3::m-join3",
+            "quality-join3::a-second",
+            "quality-join4::b-gap",
+            "quality-join4::m-join4",
+            "quality-join4::a-second",
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1"
+          ],
+          "returned_text": "ASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte0, a unidade Origem0 transfere material para a unidade Destino0.\n\nUSER\nA unidade Destino0 admite apenas 90 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte1, a unidade Origem1 transfere material para a unidade Destino1.\n\nUSER\nA unidade Destino1 admite apenas 91 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte2, a unidade Origem2 transfere material para a unidade Destino2.\n\nUSER\nA unidade Destino2 admite apenas 92 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte3, a unidade Origem3 transfere material para a unidade Destino3.\n\nUSER\nA unidade Destino3 admite apenas 93 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte4, a unidade Origem4 transfere material para a unidade Destino4.\n\nUSER\nA unidade Destino4 admite apenas 94 quilogramas por transferencia.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1."
+        },
+        {
+          "id": "join1",
+          "category": "multi_evidence",
+          "query": "Ponte1 transferencia limite",
+          "expected": [
+            {
+              "conversation_id": "quality-join1",
+              "source_id": "m-join1"
+            },
+            {
+              "conversation_id": "quality-join1",
+              "source_id": "a-second"
+            }
+          ],
+          "expected_count": 2,
+          "found_count": 2,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 17,
+          "returned_chars": 1305,
+          "elapsed_ms": 2.6439220000000176,
+          "returned_source_ids": [
+            "quality-join0::b-gap",
+            "quality-join0::m-join0",
+            "quality-join0::a-second",
+            "quality-join1::b-gap",
+            "quality-join1::m-join1",
+            "quality-join1::a-second",
+            "quality-join2::b-gap",
+            "quality-join2::m-join2",
+            "quality-join2::a-second",
+            "quality-join3::b-gap",
+            "quality-join3::m-join3",
+            "quality-join3::a-second",
+            "quality-join4::b-gap",
+            "quality-join4::m-join4",
+            "quality-join4::a-second",
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1"
+          ],
+          "returned_text": "ASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte0, a unidade Origem0 transfere material para a unidade Destino0.\n\nUSER\nA unidade Destino0 admite apenas 90 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte1, a unidade Origem1 transfere material para a unidade Destino1.\n\nUSER\nA unidade Destino1 admite apenas 91 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte2, a unidade Origem2 transfere material para a unidade Destino2.\n\nUSER\nA unidade Destino2 admite apenas 92 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte3, a unidade Origem3 transfere material para a unidade Destino3.\n\nUSER\nA unidade Destino3 admite apenas 93 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte4, a unidade Origem4 transfere material para a unidade Destino4.\n\nUSER\nA unidade Destino4 admite apenas 94 quilogramas por transferencia.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1."
+        },
+        {
+          "id": "join2",
+          "category": "multi_evidence",
+          "query": "Ponte2 transferencia limite",
+          "expected": [
+            {
+              "conversation_id": "quality-join2",
+              "source_id": "m-join2"
+            },
+            {
+              "conversation_id": "quality-join2",
+              "source_id": "a-second"
+            }
+          ],
+          "expected_count": 2,
+          "found_count": 2,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 17,
+          "returned_chars": 1305,
+          "elapsed_ms": 2.817432999999994,
+          "returned_source_ids": [
+            "quality-join0::b-gap",
+            "quality-join0::m-join0",
+            "quality-join0::a-second",
+            "quality-join1::b-gap",
+            "quality-join1::m-join1",
+            "quality-join1::a-second",
+            "quality-join2::b-gap",
+            "quality-join2::m-join2",
+            "quality-join2::a-second",
+            "quality-join3::b-gap",
+            "quality-join3::m-join3",
+            "quality-join3::a-second",
+            "quality-join4::b-gap",
+            "quality-join4::m-join4",
+            "quality-join4::a-second",
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1"
+          ],
+          "returned_text": "ASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte0, a unidade Origem0 transfere material para a unidade Destino0.\n\nUSER\nA unidade Destino0 admite apenas 90 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte1, a unidade Origem1 transfere material para a unidade Destino1.\n\nUSER\nA unidade Destino1 admite apenas 91 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte2, a unidade Origem2 transfere material para a unidade Destino2.\n\nUSER\nA unidade Destino2 admite apenas 92 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte3, a unidade Origem3 transfere material para a unidade Destino3.\n\nUSER\nA unidade Destino3 admite apenas 93 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte4, a unidade Origem4 transfere material para a unidade Destino4.\n\nUSER\nA unidade Destino4 admite apenas 94 quilogramas por transferencia.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1."
+        },
+        {
+          "id": "join3",
+          "category": "multi_evidence",
+          "query": "Ponte3 transferencia limite",
+          "expected": [
+            {
+              "conversation_id": "quality-join3",
+              "source_id": "m-join3"
+            },
+            {
+              "conversation_id": "quality-join3",
+              "source_id": "a-second"
+            }
+          ],
+          "expected_count": 2,
+          "found_count": 2,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 17,
+          "returned_chars": 1305,
+          "elapsed_ms": 2.9156910000000096,
+          "returned_source_ids": [
+            "quality-join0::b-gap",
+            "quality-join0::m-join0",
+            "quality-join0::a-second",
+            "quality-join1::b-gap",
+            "quality-join1::m-join1",
+            "quality-join1::a-second",
+            "quality-join2::b-gap",
+            "quality-join2::m-join2",
+            "quality-join2::a-second",
+            "quality-join3::b-gap",
+            "quality-join3::m-join3",
+            "quality-join3::a-second",
+            "quality-join4::b-gap",
+            "quality-join4::m-join4",
+            "quality-join4::a-second",
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1"
+          ],
+          "returned_text": "ASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte0, a unidade Origem0 transfere material para a unidade Destino0.\n\nUSER\nA unidade Destino0 admite apenas 90 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte1, a unidade Origem1 transfere material para a unidade Destino1.\n\nUSER\nA unidade Destino1 admite apenas 91 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte2, a unidade Origem2 transfere material para a unidade Destino2.\n\nUSER\nA unidade Destino2 admite apenas 92 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte3, a unidade Origem3 transfere material para a unidade Destino3.\n\nUSER\nA unidade Destino3 admite apenas 93 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte4, a unidade Origem4 transfere material para a unidade Destino4.\n\nUSER\nA unidade Destino4 admite apenas 94 quilogramas por transferencia.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1."
+        },
+        {
+          "id": "join4",
+          "category": "multi_evidence",
+          "query": "Ponte4 transferencia limite",
+          "expected": [
+            {
+              "conversation_id": "quality-join4",
+              "source_id": "m-join4"
+            },
+            {
+              "conversation_id": "quality-join4",
+              "source_id": "a-second"
+            }
+          ],
+          "expected_count": 2,
+          "found_count": 2,
+          "evidence_recall": 1,
+          "all_evidence": true,
+          "answer_evidence_present": true,
+          "abstained": false,
+          "returned_sources": 17,
+          "returned_chars": 1305,
+          "elapsed_ms": 2.660606999999999,
+          "returned_source_ids": [
+            "quality-join0::b-gap",
+            "quality-join0::m-join0",
+            "quality-join0::a-second",
+            "quality-join1::b-gap",
+            "quality-join1::m-join1",
+            "quality-join1::a-second",
+            "quality-join2::b-gap",
+            "quality-join2::m-join2",
+            "quality-join2::a-second",
+            "quality-join3::b-gap",
+            "quality-join3::m-join3",
+            "quality-join3::a-second",
+            "quality-join4::b-gap",
+            "quality-join4::m-join4",
+            "quality-join4::a-second",
+            "quality-literal0::m-literal0",
+            "quality-literal1::m-literal1"
+          ],
+          "returned_text": "ASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte0, a unidade Origem0 transfere material para a unidade Destino0.\n\nUSER\nA unidade Destino0 admite apenas 90 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte1, a unidade Origem1 transfere material para a unidade Destino1.\n\nUSER\nA unidade Destino1 admite apenas 91 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte2, a unidade Origem2 transfere material para a unidade Destino2.\n\nUSER\nA unidade Destino2 admite apenas 92 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte3, a unidade Origem3 transfere material para a unidade Destino3.\n\nUSER\nA unidade Destino3 admite apenas 93 quilogramas por transferencia.\nASSISTANT\nUm comentario intermediario sobre o calendario.\n\nUSER\nNo projeto Ponte4, a unidade Origem4 transfere material para a unidade Destino4.\n\nUSER\nA unidade Destino4 admite apenas 94 quilogramas por transferencia.\nUSER\nO projeto Mineral0 adotou o parametro limite operacional 20 quilogramas. Codigo certificado: CERT-AX0.\nUSER\nO projeto Mineral1 adotou o parametro limite operacional 21 quilogramas. Codigo certificado: CERT-AX1."
+        },
+        {
+          "id": "absent0",
+          "category": "unanswerable",
+          "query": "zqxv0 nvvqqxxzz",
+          "expected": [],
+          "expected_count": 0,
+          "found_count": 0,
+          "evidence_recall": null,
+          "all_evidence": null,
+          "answer_evidence_present": null,
+          "abstained": true,
+          "returned_sources": 0,
+          "returned_chars": 0,
+          "elapsed_ms": 0.11109700000000089,
+          "returned_source_ids": [],
+          "returned_text": ""
+        },
+        {
+          "id": "absent1",
+          "category": "unanswerable",
+          "query": "zqxv1 nvvqqxxzz",
+          "expected": [],
+          "expected_count": 0,
+          "found_count": 0,
+          "evidence_recall": null,
+          "all_evidence": null,
+          "answer_evidence_present": null,
+          "abstained": true,
+          "returned_sources": 0,
+          "returned_chars": 0,
+          "elapsed_ms": 0.1114080000000115,
+          "returned_source_ids": [],
+          "returned_text": ""
+        },
+        {
+          "id": "absent2",
+          "category": "unanswerable",
+          "query": "zqxv2 nvvqqxxzz",
+          "expected": [],
+          "expected_count": 0,
+          "found_count": 0,
+          "evidence_recall": null,
+          "all_evidence": null,
+          "answer_evidence_present": null,
+          "abstained": true,
+          "returned_sources": 0,
+          "returned_chars": 0,
+          "elapsed_ms": 0.07784699999999134,
+          "returned_source_ids": [],
+          "returned_text": ""
+        },
+        {
+          "id": "absent3",
+          "category": "unanswerable",
+          "query": "zqxv3 nvvqqxxzz",
+          "expected": [],
+          "expected_count": 0,
+          "found_count": 0,
+          "evidence_recall": null,
+          "all_evidence": null,
+          "answer_evidence_present": null,
+          "abstained": true,
+          "returned_sources": 0,
+          "returned_chars": 0,
+          "elapsed_ms": 0.07287999999999784,
+          "returned_source_ids": [],
+          "returned_text": ""
+        },
+        {
+          "id": "absent4",
+          "category": "unanswerable",
+          "query": "zqxv4 nvvqqxxzz",
+          "expected": [],
+          "expected_count": 0,
+          "found_count": 0,
+          "evidence_recall": null,
+          "all_evidence": null,
+          "answer_evidence_present": null,
+          "abstained": true,
+          "returned_sources": 0,
+          "returned_chars": 0,
+          "elapsed_ms": 0.06594899999998916,
+          "returned_source_ids": [],
+          "returned_text": ""
+        }
+      ]
+    }
+  ],
+  "finished_at": "2026-10-02T01:14:05.449Z",
+  "code_sha256": {
+    "../lib/store.js": "d7c4d26bb02dc97449e478b8f7442434aca55c0e4da442871098f4c87fdd6203",
+    "../lib/journal.js": "3e3c952a2fb456e46d284dd3c58c30ca4590c7c8b16ed1a444949f9b84223476",
+    "../lib/postings.js": "420a2a81f597ee1b7bc7e6eae3bcec78bf4f950949ad1f90ecc008cbd58cf35b",
+    "../lib/typos.js": "9ed2cf682bf92e16a1d2eb3e2d16583b70d7ad27bee12ab3729f223ecc4b9738",
+    "../lib/text.js": "9f4472ee19f4f8f76a86f54f82048d99035fc5723378ef8b786518b541a3109e",
+    "reference/sqlite/lib/store.js": "6b3ad6d3f80bc3e12301288894334c05fd29be81f9c82b4f942129500e3e4439",
+    "reference/legacy-core.txt": "e992c7632b64efbb5a5a40cd2955efb600e19464dfa19b9339fcd3149dba5ac4",
+    "dataset.mjs": "fd29802900fd2016cf295386e15037f3dc6e766d2b3b2a6593b4ed975412f57c",
+    "worker.mjs": "23b05fdbea4bd7d44de6848a44e53016400611622c52e2006f5fe41d0eb66728",
+    "adapters.mjs": "fa90a091ca6ff1c3d96c2252afbb46795d69de3af46f41f37bcb6e015973e4d5"
+  }
+}

@@ -1,39 +1,11 @@
-# Patch Terra Dourada Capture v3
+# OmniMemory — extensão Chrome
 
-Este patch corrige a captura para o DOM atual do ChatGPT.
+Execute `npm start` na raiz do projeto antes de carregar esta pasta. O servidor cria `config.js` com a conexão e uma chave local real.
 
-Ele usa:
+No Chrome, abra `chrome://extensions`, habilite o modo do desenvolvedor e carregue esta pasta sem compactação. Desative a versão antiga e recarregue as páginas do ChatGPT.
 
-```text
-[data-turn-key]
-```
+A extensão usa uma fila persistente para mensagens ainda não confirmadas. A janela do ícone mostra o estado da captura e oferece uma tentativa manual de envio. Arquivos são enviados enquanto a página permanece aberta; os bytes de arquivos pendentes não ficam nessa fila persistente.
 
-e identifica os papéis pelos rótulos:
+Somente mensagens carregadas na página são observáveis. A contagem exibida não confirma sincronização completa do histórico. Se o ChatGPT alterar seu DOM, a captura poderá precisar de adaptação.
 
-```text
-Você disse:
-ChatGPT disse:
-```
-
-## Aplicar
-
-Substitua apenas:
-
-```text
-terra-dourada-auto/extension/content.js
-```
-
-pelo `content.js` desta pasta.
-
-Depois:
-
-1. Abra `chrome://extensions`.
-2. No card `Terra Dourada Chat Capture`, clique no botão de recarregar (↻).
-3. Volte ao ChatGPT.
-4. Pressione `Ctrl+R`.
-5. Aguarde 2–3 segundos.
-6. Abra `http://127.0.0.1:8787/status`.
-
-`messages` deve ficar maior que zero.
-
-Não substitua `background.js`, pois ele contém a chave local que corresponde ao seu servidor atual.
+Ao mudar porta ou chave do servidor, reinicie o servidor e recarregue a extensão e as páginas do ChatGPT para aplicar a nova configuração.

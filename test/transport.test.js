@@ -1,0 +1,32 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
+import { MemoryStore } from '../lib/store.js';
+import { createApp } from '../server.js';
+
+test('HTTP capture, auth, file routes and actual MCP client work together',async t=>{
+ const dir=mkdtempSync(join(tmpdir(),'omni-http-')),store=new MemoryStore(join(dir,'memory.jsonl'));
+ const key='test-capture-key-isolated-runtime';const app=createApp({store,key,fileDir:join(dir,'files')});
+ await new Promise(resolve=>app.listen(0,'127.0.0.1',resolve));
+ const base=`http://127.0.0.1:${app.address().port}`;
+ t.after(async()=>{app.closeAllConnections();await new Promise(resolve=>app.close(resolve));store.close();rmSync(dir,{recursive:true,force:true});});
+ const post=(path,body,auth=key)=>fetch(base+path,{method:'POST',headers:{'content-type':'application/json','x-omni-key':auth},body:JSON.stringify(body)});
+ assert.equal((await post('/capture/batch',{},'wrong')).status,401);
+ assert.equal((await post('/capture/batch',{messages:[{conversation_id:'chat-test',message_id:'uuid-z',role:'user',text:'ExploreChem massa transporte auditoria'}]})).status,200);
+ const stats=await(await fetch(base+'/status')).json();assert.equal(stats.name,'OmniMemory');assert.equal(stats.storage,'jsonl');assert.equal(stats.messages,1);
+ const start=await(await post('/capture/file/start',{conversation_id:'chat-test',file_id:'f',filename:'note.txt',mime:'text/plain',size:7})).json();
+ assert.equal((await post('/capture/file/end',{upload_id:start.upload_id})).status,400);
+ await post('/capture/file/chunk',{upload_id:start.upload_id,offset:0,base64:Buffer.from('cobalto').toString('base64')});
+ assert.equal((await post('/capture/file/end',{upload_id:start.upload_id})).status,200);
+ const client=new Client({name:'omni-test',version:'1.0.0'});await client.connect(new StreamableHTTPClientTransport(new URL(base+'/mcp')));t.after(()=>client.close());
+ const list=await client.listTools();assert.deepEqual(list.tools.map(x=>x.name).sort(),['list_memory_scopes','read_memory_source','search_memory']);
+ const search=await client.callTool({name:'search_memory',arguments:{query:'ExploreChem massa transporte',conversation_id:'chat-test'}});
+ assert.ok(search.structuredContent.memories.length);assert.equal(search.structuredContent.memories[0].matched_word_count,3);
+ const ref=search.structuredContent.memories[0].sources[0];const source=await client.callTool({name:'read_memory_source',arguments:{source_uid:ref.source_uid,revision:ref.revision}});assert.ok(source.structuredContent.text.includes('ExploreChem'));
+ const scopes=await client.callTool({name:'list_memory_scopes',arguments:{}});assert.equal(scopes.structuredContent.conversations[0].id,'chat-test');
+ await client.close();
+});

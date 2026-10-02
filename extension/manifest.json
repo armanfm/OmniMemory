@@ -1,14 +1,18 @@
 {
   "manifest_version": 3,
-  "name": "Terra Dourada Chat Capture",
-  "version": "0.2.0",
-  "description": "Captura automaticamente mensagens visíveis do ChatGPT e envia para a memória local Terra Dourada.",
-  "permissions": [],
+  "name": "OmniMemory",
+  "version": "1.3.0",
+  "description": "O bibliotec\u00e1rio da IA: captura local de conversas e arquivos, com fila de reenvio.",
+  "permissions": [
+    "storage",
+    "alarms",
+    "unlimitedStorage"
+  ],
   "host_permissions": [
     "https://chatgpt.com/*",
     "https://chat.openai.com/*",
-    "http://127.0.0.1:8787/*",
-    "http://localhost:8787/*"
+    "http://127.0.0.1/*",
+    "http://localhost/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -26,6 +30,7 @@
     }
   ],
   "action": {
-    "default_title": "Terra Dourada"
+    "default_title": "OmniMemory",
+    "default_popup": "popup.html"
   }
 }

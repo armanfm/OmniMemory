@@ -1,0 +1,197 @@
+{
+  "version": "1.3.0",
+  "files": {
+    ".gitignore": {
+      "sha256": "8d91f192e834a71b6fc31e3213c036364328df999187dab8705de1c2059eab80",
+      "bytes": 46
+    },
+    "BENCHMARK.md": {
+      "sha256": "c3e9a3baa9f15064f926bc3058da4fc19527efc2bf3488eb17a1f4375cd3fc66",
+      "bytes": 11825
+    },
+    "COMECE_AQUI.md": {
+      "sha256": "c1ff6e556abaa375df2468f1c2f9c00d10074caf09543f75f58221dc029f25f9",
+      "bytes": 7073
+    },
+    "README.md": {
+      "sha256": "d67daba480669e748b07ddda8cbd4f20e90ad843b37df7d2e284718892707680",
+      "bytes": 24418
+    },
+    "VALIDACAO.md": {
+      "sha256": "8f247ca88518190da24278cf4a9ba9505a728150e5df19c84c72596f893e3008",
+      "bytes": 2278
+    },
+    "benchmark/adapters.mjs": {
+      "sha256": "fa90a091ca6ff1c3d96c2252afbb46795d69de3af46f41f37bcb6e015973e4d5",
+      "bytes": 1752
+    },
+    "benchmark/data/LoCoMo-LICENSE.txt": {
+      "sha256": "41003d4a74749c0220e33dd415042164b5a1093ed401f36277234f772d22d3d0",
+      "bytes": 19347
+    },
+    "benchmark/data/locomo10.json": {
+      "sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+      "bytes": 2805274
+    },
+    "benchmark/dataset.mjs": {
+      "sha256": "fd29802900fd2016cf295386e15037f3dc6e766d2b3b2a6593b4ed975412f57c",
+      "bytes": 6312
+    },
+    "benchmark/locomo.mjs": {
+      "sha256": "734cfea3d5990fec85d50684fe65ed19bef832a5f0629ad444dae0ca384c330b",
+      "bytes": 6643
+    },
+    "benchmark/reference/legacy-core.txt": {
+      "sha256": "e992c7632b64efbb5a5a40cd2955efb600e19464dfa19b9339fcd3149dba5ac4",
+      "bytes": 24530
+    },
+    "benchmark/reference/sqlite/lib/store.js": {
+      "sha256": "6b3ad6d3f80bc3e12301288894334c05fd29be81f9c82b4f942129500e3e4439",
+      "bytes": 25733
+    },
+    "benchmark/reference/sqlite/lib/text.js": {
+      "sha256": "709bbec764baa1e9f757a13b7b180171dfbed9ef99fbcb05a73ed6dce7891b08",
+      "bytes": 4636
+    },
+    "benchmark/report.py": {
+      "sha256": "0644958a7aba5096e957b75098db5f904af806cc956b7ecde08bd2f52466afed",
+      "bytes": 22254
+    },
+    "benchmark/results/current-locomo.json": {
+      "sha256": "17d05b3ea109d063af30c635ffa07c8075a94b1f0bca539594d9bda6fe538702",
+      "bytes": 15686735
+    },
+    "benchmark/results/current-performance.csv": {
+      "sha256": "e247f867330a5e96115d515504194bc341a9cbb042717d57c42fcad4f8723d43",
+      "bytes": 454
+    },
+    "benchmark/results/current-performance.json": {
+      "sha256": "d4fb6d187d6ba1b562d0256683e69d03ed9be9dd7aa686f7dd2c537a490e905d",
+      "bytes": 86188
+    },
+    "benchmark/results/current-summary.json": {
+      "sha256": "9735cb0e7f2459829bcd4753cbf5df8f7084ddaaf2551157f910ffa7ec9e2a4b",
+      "bytes": 1000
+    },
+    "benchmark/results/locomo-raw.json": {
+      "sha256": "386b76785ea736f729666d0c7ad1e86f28735d33ff49db3e72aa86f890d5c63a",
+      "bytes": 48637468
+    },
+    "benchmark/results/no-sql-raw.json": {
+      "sha256": "6705f627914417920844a022be3cae3a41f0ed77b0b52e6621d21dca769e39bf",
+      "bytes": 237635
+    },
+    "benchmark/results/no-sql-summary.csv": {
+      "sha256": "7cb7a9da2cf43593696f00ab57cef9808d2215a58f9eabd8f7fb178428e9dfb8",
+      "bytes": 390
+    },
+    "benchmark/results/summary.json": {
+      "sha256": "87a53769c21312b5944f20ce9c8fec76d06443b8d804ec39cce38e05f563fa24",
+      "bytes": 2786
+    },
+    "benchmark/run.mjs": {
+      "sha256": "703267b048538cfa7bace43168ccf928013f1287b8c49c7ee8580256507d504f",
+      "bytes": 2058
+    },
+    "benchmark/worker.mjs": {
+      "sha256": "23b05fdbea4bd7d44de6848a44e53016400611622c52e2006f5fe41d0eb66728",
+      "bytes": 3422
+    },
+    "cli.js": {
+      "sha256": "820b36ef98f7bbb294e662e8e8e3e23fa59d7a43931a1bc94d9384d238f0016a",
+      "bytes": 4552
+    },
+    "extension/README.md": {
+      "sha256": "048ade0ab86b337487a24c384cb07d9fd9bc9a5ab068f582989ecc40edf918ee",
+      "bytes": 988
+    },
+    "extension/background.js": {
+      "sha256": "982d991dd2bbc0968807ea84e15c5a1e76260deb4f5072c4404c296349c9859f",
+      "bytes": 3840
+    },
+    "extension/content.js": {
+      "sha256": "ef383107ec6d900cd2fa079fb28b9ec8bb5d3f548815423ab59e3f1301d194ef",
+      "bytes": 7885
+    },
+    "extension/manifest.json": {
+      "sha256": "8b95ae3a65e65b0b30ebf97b234616959deccf1f8cb189f5222042a6ab44c83c",
+      "bytes": 762
+    },
+    "extension/popup.html": {
+      "sha256": "fac92af1d320f1b4a19b4f8c746785cc218cc75834235f37114c744c5b420460",
+      "bytes": 714
+    },
+    "extension/popup.js": {
+      "sha256": "56968b28daf5f9fa8059fb12ab15c3790d58c43a23f83cc8d86fe77507d5a00d",
+      "bytes": 677
+    },
+    "lib/config.js": {
+      "sha256": "b76c14510ec89c38c0455d28db25192e25c9e307f3f73183cbe2b028bd1f6985",
+      "bytes": 1450
+    },
+    "lib/files.js": {
+      "sha256": "44b96d9e71c4cf0cc1997bce2126da126127dea48693ec837222b09c1b3663c0",
+      "bytes": 4528
+    },
+    "lib/import.js": {
+      "sha256": "f482002e1bedc629f9fede4857895960a6f4442f70b7daff8d126e9ce8caba9e",
+      "bytes": 4165
+    },
+    "lib/journal.js": {
+      "sha256": "3e3c952a2fb456e46d284dd3c58c30ca4590c7c8b16ed1a444949f9b84223476",
+      "bytes": 4552
+    },
+    "lib/postings.js": {
+      "sha256": "420a2a81f597ee1b7bc7e6eae3bcec78bf4f950949ad1f90ecc008cbd58cf35b",
+      "bytes": 1541
+    },
+    "lib/store.js": {
+      "sha256": "d7c4d26bb02dc97449e478b8f7442434aca55c0e4da442871098f4c87fdd6203",
+      "bytes": 22809
+    },
+    "lib/text.js": {
+      "sha256": "9f4472ee19f4f8f76a86f54f82048d99035fc5723378ef8b786518b541a3109e",
+      "bytes": 3592
+    },
+    "lib/typos.js": {
+      "sha256": "9ed2cf682bf92e16a1d2eb3e2d16583b70d7ad27bee12ab3729f223ecc4b9738",
+      "bytes": 928
+    },
+    "package-lock.json": {
+      "sha256": "ae45f2c48548189271d61098ca7f72f6ddf4e38f1bd61ad9e4a54663cf7fbe08",
+      "bytes": 42404
+    },
+    "package.json": {
+      "sha256": "b9db52adf11821f9da745763d2f6c59f8c34ab337daac3e61f36c47a921323e5",
+      "bytes": 492
+    },
+    "server.js": {
+      "sha256": "48e7a367e9ab821f7c26e0e866860a58edf11fced0b6f8314773be09722d6ffb",
+      "bytes": 7870
+    },
+    "test/extension.test.js": {
+      "sha256": "5a5ce3fc87bab0ae50a9f44ac62412d62a02f7f5eebb6015123d639456a91f21",
+      "bytes": 3727
+    },
+    "test/journal.test.js": {
+      "sha256": "557b4fbd7de361164054431a05037c0079aeb86955a7e0954a1a21ed482e0c7a",
+      "bytes": 4569
+    },
+    "test/postings.test.js": {
+      "sha256": "0716295d5322935b3227884f4b246ad9d8ec8e2dffc2a3f80fcc8a34840ad02d",
+      "bytes": 941
+    },
+    "test/store.test.js": {
+      "sha256": "899c15fa5035154fbd19f065d1d480b30638ec025d2fcd48352054fd17fc8e47",
+      "bytes": 13545
+    },
+    "test/transport.test.js": {
+      "sha256": "8ca160fb0356ce08e66a5a26d718c58021158a6a6972506b39ffb123396d647d",
+      "bytes": 3027
+    },
+    "tools/migrate-sqlite.mjs": {
+      "sha256": "71b46e8fdf0920d14f455c223a0e2e4746800a00fd4da9a1f2394de3a116d389",
+      "bytes": 2694
+    }
+  }
+}
