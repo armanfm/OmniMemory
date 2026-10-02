@@ -2,7 +2,7 @@
 
 **The librarian for your AI.**
 
-**by Armando Freire**
+
 
 Local-first memory for AI agents, with durable JSONL files and an in-memory index, deterministic lexical retrieval and no embeddings.
 
@@ -311,3 +311,5 @@ Validation was performed with Node.js 24 on Linux. Chrome's live ChatGPT DOM and
 Remaining work includes binary document text extraction, stronger branch/edit identity reconciliation, durable file-upload retries, near-duplicate suggestions and broader capture coverage detection. Journal writes, indexing and searching use synchronous operations. Startup rebuilds the index; large imports and broad searches can occupy the server event loop.
 
 **OmniMemory is the librarian for your AI: a local archive that brings relevant passages and their context into the conversation.**
+
+**by Armando Freire**
