@@ -2,7 +2,7 @@
 
 **The librarian for your AI.**
 
-** by Armando Freire**
+**by Armando Freire**
 
 Local-first memory for AI agents, with durable JSONL files and an in-memory index, deterministic lexical retrieval and no embeddings.
 
