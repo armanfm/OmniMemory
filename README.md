@@ -2,6 +2,8 @@
 
 **The librarian for your AI.**
 
+Armando Freire
+
 Local-first memory for AI agents, with durable JSONL files and an in-memory index, deterministic lexical retrieval and no embeddings.
 
 OmniMemory keeps captured conversations and files in a local archive. When an agent needs context, it consults the index, retrieves relevant passages and brings nearby text along. The agent interprets that material and reasons over it.
