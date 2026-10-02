@@ -312,4 +312,4 @@ Remaining work includes binary document text extraction, stronger branch/edit id
 
 **OmniMemory is the librarian for your AI: a local archive that brings relevant passages and their context into the conversation.**
 
-**by Armando Freire**
+**“Created and maintained by Armando Freire”**
