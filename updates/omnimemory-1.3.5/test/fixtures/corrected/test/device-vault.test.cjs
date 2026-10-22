@@ -1,0 +1,10 @@
+const test=require('node:test');const assert=require('node:assert/strict');
+const fs=require('node:fs');const os=require('node:os');const path=require('node:path');
+const {getOrCreateDeviceSecret}=require('../desktop/key-vault.cjs');
+const safeStorage={isEncryptionAvailable:()=>true,encryptString:s=>Buffer.concat([Buffer.from('ENC:'),Buffer.from(s).reverse()]),decryptString:b=>{if(b.subarray(0,4).toString()!=='ENC:')throw Error('bad');return Buffer.from(b.subarray(4)).reverse().toString();}};
+function fixture(t){const dir=fs.mkdtempSync(path.join(os.tmpdir(),'omni-vault-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));return {dir,journalPath:path.join(dir,'omnimemory.jsonl'),safeStorage};}
+test('new device key is random, encrypted on disk and stable across restarts',t=>{const a=fixture(t);const one=getOrCreateDeviceSecret(a);const two=getOrCreateDeviceSecret(a);assert.equal(one.mode,'protected-new');assert.equal(two.mode,'protected');assert.equal(one.secret,two.secret);assert.equal(one.secret.length,64);assert.equal(fs.readFileSync(path.join(a.dir,'memory-device-key.bin')).includes(Buffer.from(one.secret)),false);});
+test('never silently migrate existing plaintext',t=>{const a=fixture(t);fs.writeFileSync(a.journalPath,'old private data');assert.equal(getOrCreateDeviceSecret(a).mode,'legacy-plaintext');assert.equal(fs.existsSync(path.join(a.dir,'memory-device-key.bin')),false);});
+test('encrypted journal without key refuses to silently replace key',t=>{const a=fixture(t);fs.writeFileSync(a.journalPath,'{"omni_encrypted":1}\n');assert.throws(()=>getOrCreateDeviceSecret(a),/without its key/);});
+test('unavailable OS key encryption is a hard failure',t=>{const a=fixture(t);a.safeStorage={isEncryptionAvailable:()=>false};assert.throws(()=>getOrCreateDeviceSecret(a),/unavailable/);});
+test('corrupted device key cannot be silently regenerated',t=>{const a=fixture(t);fs.writeFileSync(path.join(a.dir,'memory-device-key.bin'),'wrong');assert.throws(()=>getOrCreateDeviceSecret(a),/cannot be unlocked/);});

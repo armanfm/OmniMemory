@@ -1,0 +1,83 @@
+﻿OMNIMEMORY DESKTOP 1.3.5 — ATUALIZAÇÃO PARA TÚNEL PRIVADO
+
+Este ZIP atualiza o código-fonte 1.3.4 e gera o instalador no seu Windows.
+Ele não é o instalador .exe pronto.
+
+COMO GERAR O INSTALADOR
+1. Extraia TODO este ZIP para uma pasta, fora de OmniMemory-Desktop.
+2. Saia do OmniMemory pelo ícone ao lado do relógio > Exit. Fechar a janela
+   com X apenas esconde o aplicativo.
+3. No PowerShell que executa o cliente de teste, pressione Ctrl+C.
+4. Dê dois cliques em Atualizar-e-gerar-instalador.cmd.
+   O projeto esperado é %USERPROFILE%\OmniMemory-Desktop.
+5. O processo confere os arquivos, faz backup apenas do código, aplica as
+   alterações, executa os testes e usa o build:win existente do projeto.
+   O cliente oficial Windows x64 0.0.16 já vem incluído e é verificado por SHA256.
+6. Ao terminar, a pasta dist será aberta. Instale o .exe recém-gerado.
+   O nome do .exe pode seguir o padrão do instalador que já existe no seu projeto.
+   Confira a data e, depois de instalar, a versão 1.3.5 no aplicativo.
+
+Se o atualizador disser que algum arquivo mudou, ele não substitui sua versão.
+Se os testes falharem, os arquivos alterados nesta execução são restaurados.
+Se a compilação falhar depois dos testes, o código atualizado fica disponível
+para corrigir a compilação e tentar novamente. Não use um .exe de build anterior.
+O caminho completo do backup de código aparece no terminal.
+
+COMO CONECTAR
+1. Abra o OmniMemory instalado. A nova janela de configuração aparece quando
+   ainda não há túnel configurado. Também pode ser aberta em File > Conectar
+   ChatGPT por tunel ou no menu do ícone ao lado do relógio.
+2. Informe o Tunnel ID do seu túnel na OpenAI.
+   Para o túnel já criado nesta conversa:
+   tunnel_6ad79481838c8191b3026bcfadb06fc9
+3. No campo Secret key da OpenAI, cole a chave API COMPLETA que você criou
+   com Tunnels Read + Use. Não é uma senha nova nem a senha do Google/Windows.
+   Não cole somente os últimos caracteres exibidos na lista de API keys.
+4. Confira as associações do túnel no painel da OpenAI: somente sua organização
+   e o workspace autorizado devem estar associados. Marque a autorização local
+   e clique em Salvar e conectar. A chave fica protegida pelo Windows.
+5. Aguarde Conectado. Se aparecer 401/403, a chave/permissão ainda foi recusada.
+   O indicador não considera somente Health/Ready como prova de autenticação.
+6. No ChatGPT > Plugins > OmniMemory-Tunel-Teste, abra as configurações do
+   servidor e atualize/recaregue a lista de ferramentas. O nome do plugin pode
+   continuar igual; não precisa criar outro túnel nem outro plugin.
+7. Com o plugin ativo na conversa, peça:
+   Execute server_info e depois echo com input OMNIMEMORY-TUNEL-OK.
+   server_info deve informar versão 1.3.5 e modo real-memory.
+8. Faça uma busca por uma informação conhecida e confira a fonte retornada.
+   Se só aparecem echo/uppercase do demo, a lista de ferramentas está antiga
+   ou o cliente de teste continua rodando no PowerShell.
+
+FERRAMENTAS DISPONÍVEIS
+server_info, echo, search_memory, investigate_memory,
+read_memory_source e list_memory_scopes. São ferramentas de leitura.
+
+ACESSO E PRIVACIDADE
+O arquivo de memórias, as chaves de criptografia, os arquivos importados,
+a recuperação e os recursos de mídia existentes não são substituídos.
+A ponte hospedada antiga deixa de iniciar consultas nesta versão. Suas
+credenciais antigas não são apagadas ou revogadas remotamente pelo instalador;
+se necessário, revogue-as no serviço antigo após conferir a migração.
+O túnel permanece privado e depende das permissões da OpenAI. O endpoint
+MCP do Desktop escuta somente no próprio computador e exige uma chave local
+aleatória de leitura, separada da captura, enviada apenas ao processo do cliente.
+O plugin sem OAuth depende do controle de acesso do túnel/workspace da OpenAI.
+Não compartilhe o seu túnel ou sua chave com seu amigo. Ele precisa do próprio
+cadastro na OpenAI e da própria configuração do Desktop.
+A OpenAI recebe as consultas e os trechos usados pela IA. Esta atualização
+remove a ponte separada desse caminho; não torna os dados invisíveis à OpenAI.
+Interromper e remover credencial fecha a leitura local pelo túnel e remove
+apenas a configuração protegida do Desktop. Não apaga memórias nem revoga
+automaticamente a API key na OpenAI.
+
+VALIDAÇÃO
+45 testes do núcleo/cliente e 8 testes do atualizador passaram no ambiente de
+preparação. Incluem consultas reais do servidor MCP sobre dados fictícios,
+credenciais trocadas entre dois dispositivos simulados, IDs de outra memória,
+revogação durante consultas, concorrência e restauração após falha.
+O cliente oficial 0.0.16 foi exercitado com o controlador integrado, usando
+um plano de controle simulado local e memórias fictícias, sem sua chave real.
+O teste nativo roda também no Windows antes do build do seu projeto.
+Ainda faltam a compilação do instalador, a abertura do Electron no seu Windows
+e a consulta final no ChatGPT às memórias desse computador após instalar.
+O isolamento entre DUAS CONTAS reais da OpenAI não foi validado aqui.

@@ -1,0 +1,14 @@
+{
+  "version": "1.3.5",
+  "project_tests_passed": 45,
+  "updater_tests_passed": 8,
+  "native_client_version": "0.0.16",
+  "native_client_platform_tested": "linux-amd64",
+  "windows_client_sha256": "4226bb74a72388147882881f29f79801b95e285d731a138071812e3aa6766571",
+  "native_protocol_test": "passed with synthetic loopback control plane and synthetic memory",
+  "actual_updater_apply": "passed against isolated copy of corrected 1.3.4",
+  "windows_build_executed": false,
+  "windows_electron_ui_executed": false,
+  "two_real_openai_accounts_tested": false,
+  "live_user_memory_query_after_install": "pending user Windows installation"
+}

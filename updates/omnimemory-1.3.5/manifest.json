@@ -1,0 +1,225 @@
+{
+  "format": 2,
+  "target": "omnimemory-desktop",
+  "base_version": "1.3.4",
+  "version": "1.3.5",
+  "files": [
+    {
+      "path": "package.json",
+      "before": [
+        "32b7db5ca6caeded2fc6f3f2551b3cacd77acb5310c4dd119cf7f1f210d685a5",
+        "ff29d39a87df5e61724431539c84d2f70e346c4cccbce1cad304974ed1393306"
+      ],
+      "after": "9cedf0cf651c7ce4336666a2f8d9278ba21c234fb8017c7239fe9adaa3cc21bd"
+    },
+    {
+      "path": "desktop/bridge-client.mjs",
+      "before": [
+        "28ee99cd27a60c773cc98e8ca36aa87dbd228a6c4afa4b22681057e05b4715f7",
+        "2d8f432345575344cf1e0a96e188dd8bd64ab4da0c67b78fe180538aeb493463"
+      ],
+      "after": "2d8f432345575344cf1e0a96e188dd8bd64ab4da0c67b78fe180538aeb493463"
+    },
+    {
+      "path": "core/server.js",
+      "before": [
+        "0e27af92a3999e5bb10a84004f5cad9c61adb49b9c46777d6e963c6f5050a005",
+        "e02c4033cd3dd4f744f1be32a583562330ef1d25b6dbe118acebf2ef2eb80ee7"
+      ],
+      "after": "d12c9748f6fac4aa2f3e7b20b29fc3d1b3cb863f7ba431d239feb6a250b92749"
+    },
+    {
+      "path": "core/test/security-gate.test.js",
+      "before": [
+        "9e3a68fc33d1a8d5117d95265d489699bcbc33546051064ae5e45f685486b93c",
+        "62702626a41c6cd49d18b1a14e5fb7d87fa1385c2d6a7455a49b1b7d2a5a7887"
+      ],
+      "after": "62702626a41c6cd49d18b1a14e5fb7d87fa1385c2d6a7455a49b1b7d2a5a7887"
+    },
+    {
+      "path": "test/bridge-concurrency.test.mjs",
+      "before": [
+        null,
+        "6a6cd8929496b8bec35d0b839853e84446835c737f7385efc8e20e631c374645"
+      ],
+      "after": "6a6cd8929496b8bec35d0b839853e84446835c737f7385efc8e20e631c374645"
+    },
+    {
+      "path": "test/local-auth.test.mjs",
+      "before": [
+        null,
+        "0798a8030d7c54d708c014cdba57eec4bb71ac42d9272a6dd8358d847c1ff30f"
+      ],
+      "after": "0798a8030d7c54d708c014cdba57eec4bb71ac42d9272a6dd8358d847c1ff30f"
+    },
+    {
+      "path": "test/tls-transport.test.mjs",
+      "before": [
+        null,
+        "6c4e80295660f1c2c0af8003939cee84f61a17558d362008e32c5e54742ef658"
+      ],
+      "after": "6c4e80295660f1c2c0af8003939cee84f61a17558d362008e32c5e54742ef658"
+    },
+    {
+      "path": "test/fixtures/tls/test-only-key.pem",
+      "before": [
+        null,
+        "3a2ead73ff62b1d57c58f73e5e6e7a8e0bb25922fb653cca7889d91a6af38b5f"
+      ],
+      "after": "3a2ead73ff62b1d57c58f73e5e6e7a8e0bb25922fb653cca7889d91a6af38b5f"
+    },
+    {
+      "path": "test/fixtures/tls/test-only-cert.pem",
+      "before": [
+        null,
+        "635c28414a55962c48d3d674885fe793eb41067165e16a82cf2f0578e28afcd9"
+      ],
+      "after": "635c28414a55962c48d3d674885fe793eb41067165e16a82cf2f0578e28afcd9"
+    },
+    {
+      "path": "desktop/main.cjs",
+      "before": [
+        "593b6d383a8e16dc0f0dd3a1c2c181e2a87fdb2a221fa73ac186833aa74a016c"
+      ],
+      "after": "c520330b2fbc786dcd343e34104fab7a92402d66e4de58b137d455e5b2286224"
+    },
+    {
+      "path": "desktop/tunnel-client.mjs",
+      "before": [
+        null
+      ],
+      "after": "4d2709cce6b3079f8692198ccc358da231f754723c49e89b21ddc0ae55e98150"
+    },
+    {
+      "path": "desktop/tunnel-vault.mjs",
+      "before": [
+        null
+      ],
+      "after": "539a8468c5022fa3f841dffb27606bf40027a5c853350ab6db6a6c0316bf3506"
+    },
+    {
+      "path": "desktop/tunnel-window.cjs",
+      "before": [
+        null
+      ],
+      "after": "0989080cf3f7bb7df1fe0959572f555cf0642ad645d08a7ed57fb269d2da2ab8"
+    },
+    {
+      "path": "desktop/tunnel-preload.cjs",
+      "before": [
+        null
+      ],
+      "after": "fcdb93b81449cdcbaeb922a99c14846e7c5ca935497037b192bc8d109afa8172"
+    },
+    {
+      "path": "desktop/tunnel.html",
+      "before": [
+        null
+      ],
+      "after": "f1456b1a1b5f1e42c0e40eb4a70fc4dcfbd097c74710578fc3d9c7f705968885"
+    },
+    {
+      "path": "desktop/tunnel.css",
+      "before": [
+        null
+      ],
+      "after": "651a50d59b80f9d4bfd87bb9953112a11737347b61f82c51332fa0769c3132c6"
+    },
+    {
+      "path": "desktop/tunnel-ui.js",
+      "before": [
+        null
+      ],
+      "after": "966447cf2ecb03ccf07ca748e4dfadc96640364601eed17584263dea6eeafd8a"
+    },
+    {
+      "path": "installer/prepare-tunnel.mjs",
+      "before": [
+        null
+      ],
+      "after": "4a044ceb7f874df3a84b5ec7a793f69c9731b6c450b7019d989ddd714d623364"
+    },
+    {
+      "path": "test/tunnel.test.mjs",
+      "before": [
+        null
+      ],
+      "after": "cb900e2038a3c7f4adb4b5220cef25f5770bc7e157fa4c6155385f5d97d51fde"
+    },
+    {
+      "path": "desktop/tunnel-runtime-integrity.json",
+      "before": [
+        null
+      ],
+      "after": "43753f0aa49c82cf525059c8a77ddb38f26fca5a32e0c2c74eecf31c4ca27c1f"
+    },
+    {
+      "path": "tunnel-runtime/tunnel-client.exe",
+      "before": [
+        null
+      ],
+      "after": "4226bb74a72388147882881f29f79801b95e285d731a138071812e3aa6766571"
+    },
+    {
+      "path": "tunnel-runtime/manifest.json",
+      "before": [
+        null
+      ],
+      "after": "273b6288a6bf205fac62bb0d1fadaacb88a8c06249e1cc48c4640dad39774418"
+    },
+    {
+      "path": "tunnel-runtime/LICENSE",
+      "before": [
+        null
+      ],
+      "after": "f4c1d7ba32ef5bcf5cf03e2eefec5825ebafedf50fa330a36700a49c605c1ef4"
+    },
+    {
+      "path": "tunnel-runtime/NOTICE",
+      "before": [
+        null
+      ],
+      "after": "1364c020d86ecf948b78b7c655175032068203d13aece70fb0bfe112d7802dc2"
+    },
+    {
+      "path": "tunnel-runtime/third-party-licenses.txt",
+      "before": [
+        null
+      ],
+      "after": "9399ced2b36f82fa18e5fe1e6df5712015680c48b8de51a4bd983e9a58de6b4c"
+    },
+    {
+      "path": "test/tunnel-native.test.mjs",
+      "before": [
+        null
+      ],
+      "after": "b718b2f3bfb31b44860a2ae6ccf2bbeac6bfaaf7594aba8c04458e9b2851e172"
+    },
+    {
+      "path": "test/runtime-integrity.test.mjs",
+      "before": [
+        null
+      ],
+      "after": "322bee75f7f57530fd536a38126be053b0b889f08eea937c7e188db59a06fc19"
+    }
+  ],
+  "guarded_files": {
+    "core/lib/blob-crypto.js": "029fa0ba2f2eda40c83d2b9f4b371ddec9c0b4eafaebd3a8268ce44e64de1a15",
+    "core/lib/config.js": "ddb6a5ab0558dc9105d1b65b55fceb40f5558a23df81e4c8166b587f0bd00fd1",
+    "core/lib/contextual.js": "105f2c1c3e9af058b7b81a0b8375febac2d9de6f1d223d5995399b463cd6b0e9",
+    "core/lib/contradictions.js": "18f021b070d42ca7509a24e56fc470eb563f52bd73369dc26a7796bc3c0ea3b9",
+    "core/lib/files.js": "a61e400e433508e2ae47497e7fde9730d8f968d871afa81413bbef886a83bc5c",
+    "core/lib/import.js": "84fab6d07706976eea332d327c473f7a879d42a9a3d9d3da131f36a0cee42697",
+    "core/lib/investigate.js": "5fff95ccac764b1a4a8b75c788cb50e574b29e7c31d5a53e284d3e66abb57163",
+    "core/lib/journal.js": "10a5c0727d825475034c35b8211acd11ae071f84f5e7468c4c1e6d1f78e67069",
+    "core/lib/postings.js": "bb9458f6793aa15bf073ad584a130e762cd48da360801f8d7aa9dfa6001e8932",
+    "core/lib/store.js": "74d5aefc8ada4dee69852facae1f8eb7292f14fabd3b1da6a79aa5a589651e7e",
+    "core/lib/text.js": "2d459760b6e6a4eb13b111a240e92889d73435c9a3b6ef65c67861a340ddaf8b",
+    "core/lib/typos.js": "94dd0c51faf84382d70ca6a91df37939e0771f3c851241d0fb0b740496c2aa57",
+    "core/test/encrypted-journal.test.js": "8befc10ec461ceb4f54970d8819034443a76070a3f4c8a842c5fedc8a54e2293",
+    "desktop/key-vault.cjs": "9d87b2d5740f9b41f42821a0f06c5dbbcd13f39a102cdba899f5d1d25b306ff4",
+    "test/bridge-client.test.mjs": "2288c8fb06c3d80fb0967efdda3041ae6fba311cfd72efe2d80837c1d07b3cc6",
+    "test/bridge-offline.test.mjs": "6f7ce66b39ec668cc9cc26fe4acc89702d4d91f2f2ec8bb19b36154e16198736",
+    "test/device-vault.test.cjs": "a8eb5bc0ed11179545cbb5a3ff10e20cf1c6aff29561dc32aaf345ff0f796f80"
+  }
+}

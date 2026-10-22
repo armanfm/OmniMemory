@@ -1,0 +1,77 @@
+{
+  "name": "omnimemory-desktop",
+  "version": "1.3.4",
+  "description": "Local file and conversation memory with verified sources, OCR and speech transcription",
+  "author": "Armando Freire",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.mjs core/test/*.test.js",
+    "build:win": "node installer/prepare-media.mjs && electron-builder --win --dir --x64 && node installer/build.mjs",
+    "prepare:media": "node installer/prepare-media.mjs",
+    "migrate:encrypt": "node core/tools/migrate-encryption.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.20.2",
+    "@thednp/dommatrix": "2.0.12",
+    "adm-zip": "0.5.16",
+    "mammoth": "1.11.0",
+    "pdfjs-dist": "5.4.296",
+    "tesseract.js": "6.0.1",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "7zip-bin": "5.2.0",
+    "electron": "44.7.2",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "br.com.armandofreire.omnimemory",
+    "productName": "OmniMemory",
+    "asar": true,
+    "files": [
+      "desktop/**/*",
+      "core/**/*",
+      "package.json",
+      "LICENSE",
+      "!node_modules/@napi-rs/**/*"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "signAndEditExecutable": false,
+      "artifactName": "OmniMemory-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "deleteAppDataOnUninstall": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": true,
+      "script": "installer/setup.nsi"
+    },
+    "extraResources": [
+      {
+        "from": "media-runtime",
+        "to": "media-runtime",
+        "filter": [
+          "**/*",
+          "!whisper.zip",
+          "!*.part"
+        ]
+      }
+    ],
+    "asarUnpack": [
+      "node_modules/**/*"
+    ]
+  },
+  "overrides": {
+    "@malept/flatpak-bundler": "0.4.0",
+    "node-int64": "0.4.0"
+  }
+}
